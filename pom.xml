@@ -1,0 +1,1088 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.maxur</groupId>
+    <artifactId>maxur-base</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <inceptionYear>2015</inceptionYear>
+
+    <url>http://myunusov.github.io/maxur-base/</url>
+
+    <name>Base POM</name>
+
+    <description>Parent POM.xml with most oftenly used pre-configured features</description>
+
+
+    <organization>
+        <name>Maxim Yunusov</name>
+        <url>http://www.maxur.org</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>myunusov</id>
+            <name>Maxim</name>
+            <email>myunusov@maxur.org</email>
+            <url>http://www.maxur.org</url>
+            <organization>Maxim Yunusov</organization>
+            <organizationUrl>http://www.maxur.org</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>-6</timezone>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:https://github.com/myunusov/maxur-base.git</connection>
+        <developerConnection>scm:git:git@github.com:myunusov/maxur-base.git</developerConnection>
+        <url>https://github.com/myunusov/maxur-base/tree/master/</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/myunusov/maxur-base/issues</url>
+    </issueManagement>
+
+    <prerequisites>
+        <maven>3.0.4</maven>
+    </prerequisites>
+
+
+    <properties>
+        <project.root>.</project.root>
+
+        <project.source.encoding>UTF-8</project.source.encoding>
+        <project.build.sourceEncoding>${project.source.encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${project.source.encoding}</project.reporting.outputEncoding>
+        <!--
+        ISO 8601, see http://en.wikipedia.org/wiki/ISO_8601. This
+        property is defined in order to give us an ability to use ${maven.build.timestamp}
+        later in the file
+        -->
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+
+        <project.source.compile>1.8</project.source.compile>
+        <project.target.compile>1.8</project.target.compile>
+
+        <slf4j.version>1.7.12</slf4j.version>
+        <logback.version>1.1.3</logback.version>
+        <jmockit.version>1.19</jmockit.version>
+        <assertj-core.version>3.2.0</assertj-core.version>
+        <config.version>1.3.0</config.version>
+        <guava.version>18.0</guava.version>
+        <junit.version>4.12</junit.version>
+        <log4j.version>1.2.17</log4j.version>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>env-dev</id>
+            <properties>
+                <env>dev</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>env-qa</id>
+            <properties>
+                <env>qa</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>env-prod</id>
+            <properties>
+                <env>prod</env>
+            </properties>
+        </profile>
+
+        <profile>
+            <!--
+            The profile deploys all artifacts to oss.sonatype.org repository .
+            It also skips default deployment plugin.
+            @see http://www.jcabi.com/jcabi-parent/profile-sonatype.html
+            -->
+            <id>sonatype</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <artifactId>maven-deploy-plugin</artifactId>
+                            <configuration>
+                                <skip>true</skip>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>maxur-sources</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <!--
+                        Generate -javadoc.jar artifact, required by Maven Central.
+                        -->
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>maxur-javadoc</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <!-- @see http://www.sonatype.com/books/nexus-book/reference/staging-sect-deployment.html -->
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.6</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>oss.sonatype.org</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <description>${project.version}</description>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>maxur-deploy-to-sonatype</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                    <goal>release</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!--
+            Static quality analysis with Qulice and other tools.
+            This profile is supposed to be activated in continuous
+            integration environment, right before the final approval
+            of the build. It runs a number of static code analysis
+            tools to validate and approve the quality of source
+            code and the SCM repository.
+            @see http://www.jcabi.com/jcabi-parent/profile-qulice.html
+            -->
+            <id>qulice</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <!--
+                        Qulice-maven-plugin is a compound static analysis
+                        tool that aggregates Checkstyle, PMD, FindBugs,
+                        CodeNarc (for Groovy code) and a few other analyzers.
+                        Qulice also configures them correctly to enable the
+                        most important rules.
+                        @see http://www.qulice.com/qulice-maven-plugin/
+                        -->
+                        <groupId>com.qulice</groupId>
+                        <artifactId>qulice-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>maxur-check</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <configuration>
+                                    <license>file:${basedir}/HEADER.txt</license>
+                                    <excludes combine.children="append">
+                                        <exclude>xml:.*</exclude>
+                                    </excludes>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!--
+            The profile builds site for production environment.
+            @see http://www.jcabi.com/jcabi-parent/profile-qulice.html
+            -->
+            <id>site</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <!--
+                        Checks the quality of Maven project documentation
+                        @see http://maven.apache.org/plugins/maven-docck-plugin/index.html
+                        -->
+                        <artifactId>maven-docck-plugin</artifactId>
+                        <version>1.1</version>
+                        <executions>
+                            <execution>
+                                <id>maxur-check</id>
+                                <!--
+                                It doesn't work as expected:
+                                https://jira.codehaus.org/browse/MDOCCK-27
+                                -->
+                                <phase>never-verify</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <version>3.4</version>
+                        <configuration>
+                            <generateSitemap>true</generateSitemap>
+                            <reportPlugins>
+                                <plugin>
+                                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                                    <version>2.8.1</version>
+                                    <configuration>
+                                        <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+                                        <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                                        <showAvatarImages>true</showAvatarImages>
+                                    </configuration>
+                                    <reportSets>
+                                        <reportSet>
+                                            <reports>
+                                                <report>cim</report>
+                                                <report>dependencies</report>
+                                                <report>index</report>
+                                                <report>issue-tracking</report>
+                                                <report>license</report>
+                                                <report>mailing-list</report>
+                                                <report>plugins</report>
+                                                <report>project-team</report>
+                                                <report>scm</report>
+                                                <report>summary</report>
+                                            </reports>
+                                        </reportSet>
+                                    </reportSets>
+                                </plugin>
+                                <plugin>
+                                    <artifactId>maven-jxr-plugin</artifactId>
+                                    <version>2.4</version>
+                                    <configuration>
+                                        <aggregate>true</aggregate>
+                                    </configuration>
+                                </plugin>
+                                <plugin>
+                                    <artifactId>maven-surefire-report-plugin</artifactId>
+                                    <version>2.17</version>
+                                    <reportSets>
+                                        <reportSet>
+                                            <reports>
+                                                <report>report-only</report>
+                                            </reports>
+                                        </reportSet>
+                                    </reportSets>
+                                </plugin>
+                                <plugin>
+                                    <!--
+                                    Shows reports about recent versions of plugins and deps.
+                                    @see http://mojo.codehaus.org/versions-maven-plugin/
+                                    -->
+                                    <groupId>org.codehaus.mojo</groupId>
+                                    <artifactId>versions-maven-plugin</artifactId>
+                                    <version>2.1</version>
+                                    <reportSets>
+                                        <reportSet>
+                                            <reports>
+                                                <report>dependency-updates-report</report>
+                                                <report>plugin-updates-report</report>
+                                            </reports>
+                                        </reportSet>
+                                    </reportSets>
+                                </plugin>
+                                <plugin>
+                                    <!--
+                                    API documentation builder. It will produce documentation
+                                    which is then to be used in site:site. It will be
+                                    located at target/site/apidocs.
+                                    -->
+                                    <artifactId>maven-javadoc-plugin</artifactId>
+                                    <configuration>
+                                        <failOnError>true</failOnError>
+                                        <quiet>true</quiet>
+                                        <links>
+                                            <link>http://download.oracle.com/javaee/6/api/</link>
+                                        </links>
+                                        <detectLinks>true</detectLinks>
+                                        <tags>
+                                            <!--
+                                            Here we instruct plugin to use custom tag
+                                            @link http://maven.apache.org/plugins/maven-javadoc-plugin/examples/tag-configuration.html
+                                            -->
+                                            <tag>
+                                                <name>todo</name>
+                                                <placement>a</placement>
+                                                <head>To do:</head>
+                                            </tag>
+                                            <tag>
+                                                <name>checkstyle</name>
+                                                <placement>a</placement>
+                                                <head>Suppressed Checkstyle violations:</head>
+                                            </tag>
+                                        </tags>
+                                    </configuration>
+                                    <reportSets>
+                                        <reportSet>
+                                            <id>maxur-versioned-html</id>
+                                            <reports>
+                                                <report>javadoc</report>
+                                            </reports>
+                                            <configuration>
+                                                <windowtitle>${project.name} ${project.version} API</windowtitle>
+                                                <doctitle>${project.name} ${project.version} API</doctitle>
+                                                <sourcepath>src/main/java</sourcepath>
+                                                <destDir>apidocs-${project.version}</destDir>
+                                            </configuration>
+                                        </reportSet>
+                                        <reportSet>
+                                            <id>maxur-versioned-test</id>
+                                            <reports>
+                                                <report>test-javadoc</report>
+                                            </reports>
+                                            <configuration>
+                                                <testWindowtitle>${project.name} ${project.version} Mock API
+                                                </testWindowtitle>
+                                                <testDoctitle>${project.name} ${project.version} Mock API</testDoctitle>
+                                                <sourcepath>src/mock/java</sourcepath>
+                                                <destDir>testapidocs-${project.version}</destDir>
+                                            </configuration>
+                                        </reportSet>
+                                    </reportSets>
+                                </plugin>
+                                <plugin>
+                                    <groupId>org.codehaus.mojo</groupId>
+                                    <artifactId>cobertura-maven-plugin</artifactId>
+                                    <version>2.7</version>
+                                </plugin>
+                                <plugin>
+                                    <artifactId>maven-plugin-plugin</artifactId>
+                                    <version>3.3</version>
+                                </plugin>
+                            </reportPlugins>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>maxur-attach-descriptor</id>
+                                <goals>
+                                    <goal>attach-descriptor</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!--
+            This profile configures site deployment to github pages. See
+            http://pages.github.com/
+            http://github.github.com/maven-plugins/site-plugin/site-mojo.html
+            -->
+            <id>gh-pages</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/src/site/resources/CNAME</exists>
+                </file>
+            </activation>
+            <properties>
+                <github.global.server>github</github.global.server>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <configuration>
+                            <skipDeploy>true</skipDeploy>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.github</groupId>
+                        <artifactId>site-maven-plugin</artifactId>
+                        <configuration>
+                            <message>site for ${project.version}</message>
+                            <path>${site.path}</path>
+                            <merge>true</merge>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>site-deploy</phase>
+                                <goals>
+                                    <goal>site</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!--
+            Sign artifacts before installation with GPG. To enable
+            this profile you should have "gpg.keyname" property defined.
+            -->
+            <id>gpg</id>
+            <activation>
+                <property>
+                    <name>gpg.keyname</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <!--
+                        To GPG-sign the artifact before deployment to foreign
+                        repository. GPG keys have to be provided in CI
+                        environment, and published beforehand.
+                        @link http://www.sonatype.com/people/2010/01/how-to-generate-pgp-signatures-with-maven/
+                        -->
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>maxur-sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!--
+            Enable unit testing. The profile is activated when you have src/test/java directory in the project.
+            -->
+            <id>dep-junit</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/src/test/java</exists>
+                </file>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.assertj</groupId>
+                    <artifactId>assertj-core</artifactId>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.jmockit</groupId>
+                    <artifactId>jmockit</artifactId>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <!--
+            Enable LOG4J for testing and SLF4J binding. The profile is activated
+            when you have src/test/resources/log4j.properties.
+            -->
+            <id>dep-log4j</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/src/test/resources/log4j.properties</exists>
+                </file>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <!--
+            Enable LOG4J for testing and SLF4J binding. The profile is activated
+            when you have src/test/resources/log4j.properties.
+            -->
+            <id>dep-logback</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/src/test/resources/logback.xml</exists>
+                </file>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                    <version>${slf4j.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>jcl-over-slf4j</artifactId>
+                    <version>${slf4j.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                    <version>${logback.version}</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.slf4j</groupId>
+                            <artifactId>slf4j-api</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+                <dependency>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-core</artifactId>
+                    <version>${logback.version}</version>
+                </dependency>
+
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>sonar</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/sonar.properties</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>sonar-maven-plugin</artifactId>
+                        <version>2.6</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>properties-maven-plugin</artifactId>
+                        <version>1.0-alpha-2</version>
+                        <executions>
+                            <execution>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>read-project-properties</goal>
+                                </goals>
+                                <configuration>
+                                    <files>
+                                        <file>${project.root}/sonar.properties</file>
+                                    </files>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>clover</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/clover.license</exists>
+                </file>
+            </activation>
+            <properties>
+                <maven-clover2-plugin.version>4.0.5</maven-clover2-plugin.version>
+                <maven.clover.skip>true</maven.clover.skip>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.atlassian.maven.plugins</groupId>
+                        <artifactId>maven-clover2-plugin</artifactId>
+                        <version>${maven-clover2-plugin.version}</version>
+                        <configuration>
+                            <generateXml>true</generateXml>
+                            <alwaysReport>true</alwaysReport>
+                            <jdk>${project.source.compile}</jdk>
+                            <snapshot>${user.home}/.clover/${project.groupId}-${project.artifactId}/clover.snapshot
+                            </snapshot>
+                            <licenseLocation>${project.root}/clover.license</licenseLocation>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>com.atlassian.maven.plugins</groupId>
+                        <artifactId>maven-clover2-plugin</artifactId>
+                        <version>${maven-clover2-plugin.version}</version>
+                        <configuration>
+                            <jdk>${project.source.compile}</jdk>
+                            <licenseLocation>${project.root}/clover.license</licenseLocation>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+
+    </profiles>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- Logging -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <!-- Forward all SLF4J calls to LOG4J. -->
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <!-- Use LOG4J logging facility for all loggings. -->
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+
+            <!-- config (hocon) -->
+            <dependency>
+                <groupId>com.typesafe</groupId>
+                <artifactId>config</artifactId>
+                <version>${config.version}</version>
+            </dependency>
+
+
+            <!-- utils -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
+
+            <!-- unit testing -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj-core.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jmockit</groupId>
+                <artifactId>jmockit</artifactId>
+                <version>${jmockit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+
+        <pluginManagement>
+            <plugins>
+
+                <plugin>
+                    <artifactId>maven-help-plugin</artifactId>
+                    <version>2.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.10</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>2.6.1</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.7</version>
+                    <configuration>
+                        <encoding>${project.source.encoding}</encoding>
+                    </configuration>
+                    <!-- https://issues.apache.org/jira/browse/MSHARED-325 -->
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.maven.shared</groupId>
+                            <artifactId>maven-filtering</artifactId>
+                            <version>1.3</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.3</version>
+                    <configuration>
+                        <source>${project.source.compile}</source>
+                        <target>${project.target.compile}</target>
+                        <encoding>${project.source.encoding}</encoding>
+                        <optimize>true</optimize>
+                        <showWarnings>true</showWarnings>
+                        <showDeprecation>true</showDeprecation>
+                        <compilerArgs>
+                            <arg>-Xlint</arg>
+                            <arg>-Werror</arg>
+                            <arg>-Xlint:-path</arg>
+                            <!-- @see https://blogs.oracle.com/darcy/entry/bootclasspath_older_source -->
+                            <arg>-Xlint:-options</arg>
+                            <!-- @see http://netbeans.org/bugzilla/show_bug.cgi?format=multiple&id=208666 -->
+                            <!-- this is to avoid a problem with ANTLR and JDK7 -->
+                            <arg>-Xlint:-classfile</arg>
+                            <!-- ignore APT warnings -->
+                            <arg>-Xlint:-processing</arg>
+                        </compilerArgs>
+                        <testExcludes>
+                            <exclude>**/package-info.java</exclude>
+                        </testExcludes>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.19</version>
+                    <configuration>
+                        <useFile>false</useFile>
+                        <runOrder>random</runOrder>
+                        <trimStackTrace>false</trimStackTrace>
+                        <failIfNoTests>false</failIfNoTests>
+                        <failIfNoSpecifiedTests>true</failIfNoSpecifiedTests>
+                        <parallel>all</parallel>
+                        <parallelTestsTimeoutInSeconds>0</parallelTestsTimeoutInSeconds>
+                        <parallelTestsTimeoutForcedInSeconds>0</parallelTestsTimeoutForcedInSeconds>
+                        <perCoreThreadCount>true</perCoreThreadCount>
+                        <threadCount>4</threadCount>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>2.19</version>
+                    <configuration>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
+                        <forkCount>0</forkCount>
+                        <parallel>all</parallel>
+                        <parallelTestsTimeoutForcedInSeconds>0</parallelTestsTimeoutForcedInSeconds>
+                        <parallelTestsTimeoutInSeconds>0</parallelTestsTimeoutInSeconds>
+                        <perCoreThreadCount>true</perCoreThreadCount>
+                        <runOrder>random</runOrder>
+                        <threadCount>8</threadCount>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.6</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.6</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>2.6</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.4</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.10.3</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.2</version>
+                    <configuration>
+                        <createChecksum>true</createChecksum>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.4</version>
+                    <configuration>
+                        <reportPlugins>
+                            <!--
+                            Section is intentionally empty. Full list of plugins
+                            is configured in "CI" profile. We don't need all them
+                            during development, that's why they are not here.
+                            -->
+                        </reportPlugins>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-module-markdown</artifactId>
+                            <version>1.6</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>2.8.1</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.5.3</version>
+                    <configuration>
+                        <tagBase>https://svn.apache.org/repos/asf/continuum/tags</tagBase>
+                        <preparationGoals>clean install</preparationGoals>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                    <executions>
+                        <execution>
+                            <id>default-deploy</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>deploy</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.8</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>io.takari.maven.plugins</groupId>
+                    <artifactId>takari-lifecycle-plugin</artifactId>
+                    <extensions>true</extensions>
+                    <version>1.11.11</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>appassembler-maven-plugin</artifactId>
+                    <version>1.10</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-invoker-plugin</artifactId>
+                    <version>2.0</version>
+                    <configuration>
+                        <mergeUserSettings>true</mergeUserSettings>
+                        <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+                        <debug>false</debug>
+                        <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
+                        <noLog>false</noLog>
+                        <postBuildHookScript>verify</postBuildHookScript>
+                        <preBuildHookScript>setup</preBuildHookScript>
+                        <projectsDirectory>src/it</projectsDirectory>
+                        <settingsFile>${basedir}/src/it/settings.xml</settingsFile>
+                        <showErrors>true</showErrors>
+                        <showVersion>false</showVersion>
+                        <streamLogs>true</streamLogs>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.github.github</groupId>
+                    <artifactId>site-maven-plugin</artifactId>
+                    <version>0.12</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.qulice</groupId>
+                    <artifactId>qulice-maven-plugin</artifactId>
+                    <version>0.13</version>
+                    <configuration>
+                        <license>file:${basedir}/LICENSE.txt</license>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>2.17</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>3.5</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>findbugs-maven-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>1.4.1</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.pitest</groupId>
+                    <artifactId>pitest-maven</artifactId>
+                    <version>1.1.7</version>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-property</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireProperty>
+                                    <property>env</property>
+                                    <message>You must specify one of the following profiles: evn-dev, env-qa,
+                                        env-prod!
+                                    </message>
+                                    <regex>(dev|qa|prod)</regex>
+                                    <regexMessage>
+                                        You must specify one of the following profiles: evn-dev, env-qa, env-prod!
+                                    </regexMessage>
+                                </requireProperty>
+                                <requireMavenVersion>
+                                    <version>[3.0.4,)</version>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <version>[1.8,)</version>
+                                </requireJavaVersion>
+                                <requireReleaseDeps>
+                                    <message>No Snapshots Allowed!</message>
+                                    <failWhenParentIsSnapshot>false</failWhenParentIsSnapshot>
+                                    <excludes>
+                                        <exclude>org.maxur:*</exclude>
+                                    </excludes>
+                                </requireReleaseDeps>
+                                <requireUpperBoundDeps/>
+                                <DependencyConvergence/>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <pushChanges>false</pushChanges>
+                    <localCheckout>true</localCheckout>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.scm</groupId>
+                        <artifactId>maven-scm-provider-gitexe</artifactId>
+                        <!-- This version is necessary for use with git version 1.8.5 -->
+                        <version>1.8.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+    <reporting>
+        <!--
+        Rudimentary section, for Maven 2.0 plugins mostly.
+        -->
+        <excludeDefaults/>
+    </reporting>
+
+
+    <repositories>
+        <!--
+        AVOID RELEASE repositories
+        You should keep it empty in your project.
+        @see http://www.sonatype.com/people/2009/02/why-putting-repositories-in-your-poms-is-a-bad-idea/
+        -->
+    </repositories>
+    <pluginRepositories>
+        <!--
+        AVOID RELEASE pluginRepositories
+        You should keep it empty in your project.
+        @see http://www.sonatype.com/people/2009/02/why-putting-repositories-in-your-poms-is-a-bad-idea/
+        -->
+        <pluginRepository>
+            <id>oss.sonatype.org</id>
+            <url>https://oss.sonatype.org/content/groups/public</url>
+        </pluginRepository>
+    </pluginRepositories>
+</project>
