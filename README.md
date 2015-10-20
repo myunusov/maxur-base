@@ -4,6 +4,10 @@
 
 [![Dependency Status](https://www.versioneye.com/user/projects/5626986c36d0ab0016001030/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5626986c36d0ab0016001030)
 
+[![Issue Stats](http://issuestats.com/github/myunusov/maxur-base/badge/pr)](http://issuestats.com/github/myunusov/maxur-base)
+
+[![Issue Stats](http://issuestats.com/github/myunusov/maxur-base/badge/issue)](http://issuestats.com/github/myunusov/maxur-base)
+
 Base Maven projects on this artifact and you will get many pre-configuration benefits, 
 including up-to-date dependencies, plugins, build extensions, repositories, and more. 
 
