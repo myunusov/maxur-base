@@ -1110,7 +1110,7 @@
                                     </message>
                                     <regex>(dev|qa|prod)</regex>
                                     <regexMessage>
-                                        You must specify one of the following profiles: evn-dev, env-qa, env-prod!
+                                        You must specify one of the following profiles: env-dev, env-qa, env-prod!
                                     </regexMessage>
                                 </requireProperty>
                                 <requireMavenVersion>
