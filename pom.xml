@@ -81,6 +81,8 @@
         <project.source.compile>1.8</project.source.compile>
         <project.target.compile>1.8</project.target.compile>
 
+        <maven-clover2-plugin.version>4.0.6</maven-clover2-plugin.version>
+
         <slf4j.version>1.7.12</slf4j.version>
         <logback.version>1.1.3</logback.version>
         <jmockit.version>1.19</jmockit.version>
@@ -462,29 +464,6 @@
                                         </reportSet>
                                     </reportSets>
                                 </plugin>
-
-<!--                                <plugin>
-                                    <groupId>org.apache.maven.plugins</groupId>
-                                    <artifactId>maven-changes-plugin</artifactId>
-                                    <configuration>
-                                        <includeOpenIssues>false</includeOpenIssues>
-                                        <columnNames>Id,Type,Summary,Fix Version</columnNames>
-                                    </configuration>
-                                    <reportSets>
-                                        <reportSet>
-                                            &lt;!&ndash; Empty report set as default &ndash;&gt;
-                                            <reports>
-                                            </reports>
-                                        </reportSet>
-                                        <reportSet>
-                                            <id>release-notes</id>
-                                            <inherited>false</inherited>
-                                            <reports>
-                                                <report>github-report</report>
-                                            </reports>
-                                        </reportSet>
-                                    </reportSets>
-                                </plugin>-->
 
                             </reportPlugins>
                         </configuration>
