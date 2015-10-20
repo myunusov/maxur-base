@@ -699,10 +699,6 @@
                     <exists>${basedir}/clover.license</exists>
                 </file>
             </activation>
-            <properties>
-                <maven-clover2-plugin.version>4.0.5</maven-clover2-plugin.version>
-                <maven.clover.skip>true</maven.clover.skip>
-            </properties>
             <build>
                 <plugins>
                     <plugin>
