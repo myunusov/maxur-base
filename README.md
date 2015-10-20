@@ -1,5 +1,7 @@
 ##Base POM
 
+[![Build Status](https://travis-ci.org/myunusov/maxur-base.svg?branch=master)](https://travis-ci.org/myunusov/maxur-base)
+
 Base Maven projects on this artifact and you will get many pre-configuration benefits, 
 including up-to-date dependencies, plugins, build extensions, repositories, and more. 
 
