@@ -17,6 +17,42 @@
 
     <description>Parent POM.xml with most oftenly used pre-configured features</description>
 
+    <properties>
+        <project.root>.</project.root>
+
+        <project.source.encoding>UTF-8</project.source.encoding>
+        <project.build.sourceEncoding>${project.source.encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${project.source.encoding}</project.reporting.outputEncoding>
+        <!--
+        ISO 8601, see http://en.wikipedia.org/wiki/ISO_8601. This
+        property is defined in order to give us an ability to use ${maven.build.timestamp}
+        later in the file
+        -->
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+
+        <project.source.compile>1.8</project.source.compile>
+        <project.target.compile>1.8</project.target.compile>
+        
+        <!--
+                - settings.xml -
+                <server>
+                    <id>github</id>
+                    <password>OAuthToken</password>
+                </server>
+        -->
+        <github.global.server>github</github.global.server>        
+        
+        <maven-clover2-plugin.version>4.0.6</maven-clover2-plugin.version>
+
+        <slf4j.version>1.7.12</slf4j.version>
+        <logback.version>1.1.3</logback.version>
+        <jmockit.version>1.19</jmockit.version>
+        <assertj-core.version>3.2.0</assertj-core.version>
+        <config.version>1.3.0</config.version>
+        <guava.version>18.0</guava.version>
+        <junit.version>4.12</junit.version>
+        <log4j.version>1.2.17</log4j.version>
+    </properties>
 
     <organization>
         <name>Maxim Yunusov</name>
@@ -54,7 +90,27 @@
         <url>https://github.com/myunusov/maxur-base/tree/master/</url>
         <tag>HEAD</tag>
     </scm>
-
+    
+    <distributionManagement>
+        <downloadUrl>https://oss.sonatype.org/content/groups/public</downloadUrl>
+        <!-- Deploy releases -->
+        <repository>
+            <id>oss.sonatype.org</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+        <!-- Deploy snapshots -->
+        <snapshotRepository>
+            <id>oss.sonatype.org</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <!-- Deploy site -->
+        <site>
+            <id>${github.global.server}</id>
+            <name>Deployment through GitHub's site deployment plugin</name>
+            <url>git:ssh://git@github.com/myunusov/pm.git?gh-pages#</url>
+        </site>
+    </distributionManagement>
+    
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/myunusov/maxur-base/issues</url>
@@ -63,36 +119,7 @@
     <prerequisites>
         <maven>3.0.4</maven>
     </prerequisites>
-
-
-    <properties>
-        <project.root>.</project.root>
-
-        <project.source.encoding>UTF-8</project.source.encoding>
-        <project.build.sourceEncoding>${project.source.encoding}</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>${project.source.encoding}</project.reporting.outputEncoding>
-        <!--
-        ISO 8601, see http://en.wikipedia.org/wiki/ISO_8601. This
-        property is defined in order to give us an ability to use ${maven.build.timestamp}
-        later in the file
-        -->
-        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
-
-        <project.source.compile>1.8</project.source.compile>
-        <project.target.compile>1.8</project.target.compile>
-
-        <maven-clover2-plugin.version>4.0.6</maven-clover2-plugin.version>
-
-        <slf4j.version>1.7.12</slf4j.version>
-        <logback.version>1.1.3</logback.version>
-        <jmockit.version>1.19</jmockit.version>
-        <assertj-core.version>3.2.0</assertj-core.version>
-        <config.version>1.3.0</config.version>
-        <guava.version>18.0</guava.version>
-        <junit.version>4.12</junit.version>
-        <log4j.version>1.2.17</log4j.version>
-    </properties>
-
+    
     <profiles>
         <profile>
             <id>env-dev</id>
