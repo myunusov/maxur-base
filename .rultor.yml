@@ -1,3 +1,5 @@
+architect:
+  - myunusov
 docker:
   image: "teamed/docker-java-8"
 decrypt:
