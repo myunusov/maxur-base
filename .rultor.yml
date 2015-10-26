@@ -1,3 +1,7 @@
+architect:
+  - maximyunusov
+docker:
+  image: "teamed/docker-java-8"
 decrypt:
   settings.xml: "repo/settings.xml.asc"
   pubring.gpg: "repo/pubring.gpg.asc"
