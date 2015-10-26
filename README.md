@@ -8,6 +8,8 @@
 
 [![Issue Stats](http://issuestats.com/github/myunusov/maxur-base/badge/issue)](http://issuestats.com/github/myunusov/maxur-base)
 
+[![DevOps By Rultor.com](http://www.rultor.com/b/myunusov/maxur-base)](http://www.rultor.com/p/myunusov/maxur-base)
+
 Base Maven projects on this artifact and you will get many pre-configuration benefits, 
 including up-to-date dependencies, plugins, build extensions, repositories, and more. 
 
