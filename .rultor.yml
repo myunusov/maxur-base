@@ -9,6 +9,6 @@ decrypt:
 release:
   script: |
     mvn versions:set "-DnewVersion=${tag}" -Penv-prod
-    mvn clean site site:site -Penv-prod,site,gh-pages
+    mvn clean site com.github.github:site-maven-plugin:site -Penv-prod,site,gh-pages
     git commit -am "${tag}"
     mvn clean deploy --settings /home/r/settings.xml -Penv-prod,maxur-base,sonatype
