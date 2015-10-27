@@ -116,6 +116,11 @@
         <url>https://github.com/myunusov/maxur-base/issues</url>
     </issueManagement>
 
+    <ciManagement>
+        <system>travis</system>
+        <url>https://travis-ci.org/myunusov/maxur-base</url>
+    </ciManagement>
+
     <prerequisites>
         <maven>3.0.4</maven>
     </prerequisites>
