@@ -301,7 +301,7 @@
                                     </issueManagementSystems>
                                     <template>announcement.vm</template>
                                     <templateDirectory>template</templateDirectory>
-                                    <announcementFile>RELEASE-NOTES.md</announcementFile>
+                                    <announcementFile>release-notes.md</announcementFile>
                                     <announcementDirectory>
                                         ${project.basedir}/src/site/markdown
                                     </announcementDirectory>

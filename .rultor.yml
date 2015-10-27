@@ -9,5 +9,4 @@ decrypt:
 release:
   script: |
     mvn versions:set "-DnewVersion=${tag}" -Penv-prod
-    git commit -am "${tag}"
-    mvn clean deploy --settings /home/r/settings.xml -Penv-prod,maxur-base,sonatype,site,gh-pages
+    mvn clean site site:site -Penv-prod,site,gh-pages
