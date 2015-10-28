@@ -6,7 +6,7 @@
 
     <groupId>org.maxur</groupId>
     <artifactId>maxur-base</artifactId>
-    <version>0.7-SNAPSHOT</version>
+    <version>0.6</version>
     <packaging>pom</packaging>
 
     <inceptionYear>2015</inceptionYear>
@@ -32,7 +32,7 @@
 
         <project.source.compile>1.8</project.source.compile>
         <project.target.compile>1.8</project.target.compile>
-        
+
         <!--
                 - settings.xml -
                 <server>
@@ -40,8 +40,8 @@
                     <password>OAuthToken</password>
                 </server>
         -->
-        <github.global.server>github</github.global.server>        
-        
+        <github.global.server>github</github.global.server>
+
         <maven-clover2-plugin.version>4.0.6</maven-clover2-plugin.version>
 
         <slf4j.version>1.7.12</slf4j.version>
@@ -90,7 +90,7 @@
         <url>https://github.com/myunusov/maxur-base/tree/master/</url>
         <tag>HEAD</tag>
     </scm>
-    
+
     <distributionManagement>
         <downloadUrl>https://oss.sonatype.org/content/groups/public</downloadUrl>
         <!-- Deploy releases -->
@@ -107,10 +107,10 @@
         <site>
             <id>${github.global.server}</id>
             <name>Deployment through GitHub's site deployment plugin</name>
-            <url>git:ssh://git@github.com/myunusov/pm.git?gh-pages#</url>
+            <url>git:ssh://git@github.com/myunusov/maxur-base.git?gh-pages#</url>
         </site>
     </distributionManagement>
-    
+
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/myunusov/maxur-base/issues</url>
@@ -124,7 +124,7 @@
     <prerequisites>
         <maven>3.0.4</maven>
     </prerequisites>
-    
+
     <profiles>
         <profile>
             <id>env-dev</id>
@@ -143,152 +143,8 @@
             <properties>
                 <env>prod</env>
             </properties>
-        </profile>
-
-        <profile>
-            <!--
-            The profile deploys all artifacts to oss.sonatype.org repository .
-            It also skips default deployment plugin.
-            @see http://www.jcabi.com/jcabi-parent/profile-sonatype.html
-            -->
-            <id>sonatype</id>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <artifactId>maven-deploy-plugin</artifactId>
-                            <configuration>
-                                <skip>true</skip>
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>maxur-sources</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <!--
-                        Generate -javadoc.jar artifact, required by Maven Central.
-                        -->
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>maxur-javadoc</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <!-- @see http://www.sonatype.com/books/nexus-book/reference/staging-sect-deployment.html -->
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.6</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>oss.sonatype.org</serverId>
-                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <description>${project.version}</description>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>maxur-deploy-to-sonatype</id>
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>deploy</goal>
-                                    <goal>release</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <!--
-            Static quality analysis with Qulice and other tools.
-            This profile is supposed to be activated in continuous
-            integration environment, right before the final approval
-            of the build. It runs a number of static code analysis
-            tools to validate and approve the quality of source
-            code and the SCM repository.
-            @see http://www.jcabi.com/jcabi-parent/profile-qulice.html
-            -->
-            <id>qulice</id>
             <build>
                 <plugins>
-                    <plugin>
-                        <!--
-                        Qulice-maven-plugin is a compound static analysis
-                        tool that aggregates Checkstyle, PMD, FindBugs,
-                        CodeNarc (for Groovy code) and a few other analyzers.
-                        Qulice also configures them correctly to enable the
-                        most important rules.
-                        @see http://www.qulice.com/qulice-maven-plugin/
-                        -->
-                        <groupId>com.qulice</groupId>
-                        <artifactId>qulice-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>maxur-check</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                                <configuration>
-                                    <license>file:${basedir}/HEADER.txt</license>
-                                    <excludes combine.children="append">
-                                        <exclude>xml:.*</exclude>
-                                    </excludes>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <!--
-            The profile builds site for production environment.
-            @see http://www.jcabi.com/jcabi-parent/profile-qulice.html
-            -->
-            <id>site</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <!--
-                        Checks the quality of Maven project documentation
-                        @see http://maven.apache.org/plugins/maven-docck-plugin/index.html
-                        -->
-                        <artifactId>maven-docck-plugin</artifactId>
-                        <version>1.1</version>
-                        <executions>
-                            <execution>
-                                <id>maxur-check</id>
-                                <!--
-                                It doesn't work as expected:
-                                https://jira.codehaus.org/browse/MDOCCK-27
-                                -->
-                                <phase>never-verify</phase>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-changes-plugin</artifactId>
@@ -308,12 +164,179 @@
                                     <templateDirectory>template</templateDirectory>
                                     <announcementFile>release-notes.md</announcementFile>
                                     <announcementDirectory>
-                                        ${project.basedir}/src/site/markdown
+                                        ${project.root}/src/site/markdown
                                     </announcementDirectory>
                                 </configuration>
                             </execution>
                         </executions>
                     </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>clover</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/clover.license</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.atlassian.maven.plugins</groupId>
+                        <artifactId>maven-clover2-plugin</artifactId>
+                        <version>${maven-clover2-plugin.version}</version>
+                        <configuration>
+                            <generateXml>true</generateXml>
+                            <alwaysReport>true</alwaysReport>
+                            <jdk>${project.source.compile}</jdk>
+                            <snapshot>${user.home}/.clover/${project.groupId}-${project.artifactId}/clover.snapshot
+                            </snapshot>
+                            <licenseLocation>${project.root}/clover.license</licenseLocation>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>com.atlassian.maven.plugins</groupId>
+                        <artifactId>maven-clover2-plugin</artifactId>
+                        <version>${maven-clover2-plugin.version}</version>
+                        <configuration>
+                            <jdk>${project.source.compile}</jdk>
+                            <licenseLocation>${project.root}/clover.license</licenseLocation>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+
+        <profile>
+            <id>inspect</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.qulice</groupId>
+                        <artifactId>qulice-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>maxur-check</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <configuration>
+                                    <license>file:${basedir}/LICENSE.txt</license>
+                                    <excludes combine.children="append">
+                                        <exclude>xml:.*</exclude>
+                                    </excludes>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.basepom.maven</groupId>
+                        <artifactId>duplicate-finder-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>maxur-check</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <skip>false</skip>
+                            <quiet>false</quiet>
+                            <checkCompileClasspath>true</checkCompileClasspath>
+                            <checkRuntimeClasspath>true</checkRuntimeClasspath>
+                            <checkTestClasspath>true</checkTestClasspath>
+                            <failBuildInCaseOfDifferentContentConflict>false</failBuildInCaseOfDifferentContentConflict>
+                            <failBuildInCaseOfEqualContentConflict>false</failBuildInCaseOfEqualContentConflict>
+                            <failBuildInCaseOfConflict>false</failBuildInCaseOfConflict>
+                            <printEqualFiles>false</printEqualFiles>
+                            <preferLocal>true</preferLocal>
+                            <includeBootClasspath>false</includeBootClasspath>
+                            <bootClasspathProperty>sun.boot.class.path</bootClasspathProperty>
+                            <includePomProjects>false</includePomProjects>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>gh-pages</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/src/site/resources/CNAME</exists>
+                </file>
+            </activation>
+            <properties>
+                <github.global.server>github</github.global.server>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <configuration>
+                            <skipDeploy>true</skipDeploy>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.github</groupId>
+                        <artifactId>site-maven-plugin</artifactId>
+                        <configuration>
+                            <message>site for ${project.version}</message>
+                            <path>${site.path}</path>
+                            <merge>true</merge>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>site-deploy</phase>
+                                <goals>
+                                    <goal>site</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>gpg</id>
+            <activation>
+                <property>
+                    <name>gpg.keyname</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>maxur-sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>site</id>
+            <build>
+                <plugins>
                     <plugin>
                         <artifactId>maven-site-plugin</artifactId>
                         <version>3.4</version>
@@ -513,89 +536,6 @@
         </profile>
 
         <profile>
-            <!--
-            This profile configures site deployment to github pages. See
-            http://pages.github.com/
-            http://github.github.com/maven-plugins/site-plugin/site-mojo.html
-            -->
-            <id>gh-pages</id>
-            <activation>
-                <file>
-                    <exists>${basedir}/src/site/resources/CNAME</exists>
-                </file>
-            </activation>
-            <properties>
-                <github.global.server>github</github.global.server>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-site-plugin</artifactId>
-                        <configuration>
-                            <skipDeploy>true</skipDeploy>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>com.github.github</groupId>
-                        <artifactId>site-maven-plugin</artifactId>
-                        <configuration>
-                            <message>site for ${project.version}</message>
-                            <path>${site.path}</path>
-                            <merge>true</merge>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <phase>site-deploy</phase>
-                                <goals>
-                                    <goal>site</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <!--
-            Sign artifacts before installation with GPG. To enable
-            this profile you should have "gpg.keyname" property defined.
-            -->
-            <id>gpg</id>
-            <activation>
-                <property>
-                    <name>gpg.keyname</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <!--
-                        To GPG-sign the artifact before deployment to foreign
-                        repository. GPG keys have to be provided in CI
-                        environment, and published beforehand.
-                        @link http://www.sonatype.com/people/2010/01/how-to-generate-pgp-signatures-with-maven/
-                        -->
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.6</version>
-                        <executions>
-                            <execution>
-                                <id>maxur-sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <!--
-            Enable unit testing. The profile is activated when you have src/test/java directory in the project.
-            -->
             <id>dep-junit</id>
             <activation>
                 <file>
@@ -622,10 +562,6 @@
         </profile>
 
         <profile>
-            <!--
-            Enable LOG4J for testing and SLF4J binding. The profile is activated
-            when you have src/test/resources/log4j.properties.
-            -->
             <id>dep-log4j</id>
             <activation>
                 <file>
@@ -647,10 +583,6 @@
         </profile>
 
         <profile>
-            <!--
-            Enable LOG4J for testing and SLF4J binding. The profile is activated
-            when you have src/test/resources/log4j.properties.
-            -->
             <id>dep-logback</id>
             <activation>
                 <file>
@@ -725,42 +657,69 @@
         </profile>
 
         <profile>
-            <id>clover</id>
-            <activation>
-                <file>
-                    <exists>${basedir}/clover.license</exists>
-                </file>
-            </activation>
+            <id>sonatype</id>
             <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <artifactId>maven-deploy-plugin</artifactId>
+                            <configuration>
+                                <skip>true</skip>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
                 <plugins>
                     <plugin>
-                        <groupId>com.atlassian.maven.plugins</groupId>
-                        <artifactId>maven-clover2-plugin</artifactId>
-                        <version>${maven-clover2-plugin.version}</version>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>maxur-sources</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <!--
+                        Generate -javadoc.jar artifact, required by Maven Central.
+                        -->
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>maxur-javadoc</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <!-- @see http://www.sonatype.com/books/nexus-book/reference/staging-sect-deployment.html -->
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.6</version>
+                        <extensions>true</extensions>
                         <configuration>
-                            <generateXml>true</generateXml>
-                            <alwaysReport>true</alwaysReport>
-                            <jdk>${project.source.compile}</jdk>
-                            <snapshot>${user.home}/.clover/${project.groupId}-${project.artifactId}/clover.snapshot
-                            </snapshot>
-                            <licenseLocation>${project.root}/clover.license</licenseLocation>
+                            <serverId>oss.sonatype.org</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <description>${project.version}</description>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <id>maxur-deploy-to-sonatype</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                    <goal>release</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
-            <reporting>
-                <plugins>
-                    <plugin>
-                        <groupId>com.atlassian.maven.plugins</groupId>
-                        <artifactId>maven-clover2-plugin</artifactId>
-                        <version>${maven-clover2-plugin.version}</version>
-                        <configuration>
-                            <jdk>${project.source.compile}</jdk>
-                            <licenseLocation>${project.root}/clover.license</licenseLocation>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </reporting>
         </profile>
 
     </profiles>
@@ -969,7 +928,8 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
-                    <version>2.1</version> <!-- keep it at 2.1, see #42 -->
+                    <version>2.1</version>
+                    <!-- keep it at 2.1, see #42 -->
                     <configuration>
                         <generateBackupPoms>false</generateBackupPoms>
                     </configuration>
@@ -1075,6 +1035,12 @@
                     <configuration>
                         <license>file:${basedir}/LICENSE.txt</license>
                     </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.basepom.maven</groupId>
+                    <artifactId>duplicate-finder-maven-plugin</artifactId>
+                    <version>1.2.1</version>
                 </plugin>
 
                 <plugin>
