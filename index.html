@@ -54,13 +54,13 @@
 									<li class="dropdown-submenu ">
 										<a href="project-info.html" title="Project Information">Project Information</a>
 										<ul class="dropdown-menu">
-											<li ><a href="integration.html" title="Continuous Integration">Continuous Integration</a></li>
 											<li class="active"><a href="" title="About">About</a></li>
-											<li ><a href="issue-tracking.html" title="Issue Tracking">Issue Tracking</a></li>
 											<li ><a href="license.html" title="Project License">Project License</a></li>
-											<li ><a href="plugins.html" title="Project Plugins">Project Plugins</a></li>
 											<li ><a href="team-list.html" title="Project Team">Project Team</a></li>
+											<li ><a href="issue-tracking.html" title="Issue Tracking">Issue Tracking</a></li>
 											<li ><a href="source-repository.html" title="Source Repository">Source Repository</a></li>
+											<li ><a href="integration.html" title="Continuous Integration">Continuous Integration</a></li>
+											<li ><a href="plugins.html" title="Project Plugins">Project Plugins</a></li>
 											<li ><a href="project-summary.html" title="Project Summary">Project Summary</a></li>
 										</ul>
 									</li>
@@ -103,19 +103,27 @@
 	</header>
 
 	<div class="main-body">
-	<div id="carousel0" class="carousel slide">
-		<div class="carousel-inner">
-			<div class="item active">
-				<div class="carousel-caption">
-					<h2 id="About">About</h2>
-<p>Base Maven projects on this artifact and you will get many pre-configuration benefits, including up-to-date dependencies, plugins, build extensions, repositories, and more. </p>
-<div class="section">     
+	<div class="row columns columns2">
+		<div class="span6">
+			<h1>Base POM</h1>
+<p><a class="externalLink" href="https://travis-ci.org/myunusov/maxur-base"><img src="https://travis-ci.org/myunusov/maxur-base.svg?branch=master" alt="Build Status" /></a></p>
+<p><a class="externalLink" href="https://www.versioneye.com/user/projects/5626986c36d0ab0016001030"><img src="https://www.versioneye.com/user/projects/5626986c36d0ab0016001030/badge.svg?style=flat" alt="Dependency Status" /></a></p>
+<p><a class="externalLink" href="http://issuestats.com/github/myunusov/maxur-base"><img src="http://issuestats.com/github/myunusov/maxur-base/badge/pr" alt="Issue Stats" /></a></p>
+<p><a class="externalLink" href="http://issuestats.com/github/myunusov/maxur-base"><img src="http://issuestats.com/github/myunusov/maxur-base/badge/issue" alt="Issue Stats" /></a></p>
+<p><a class="externalLink" href="http://www.rultor.com/p/myunusov/maxur-base"><img src="http://www.rultor.com/b/myunusov/maxur-base" alt="DevOps By Rultor.com" /></a></p>
+<div class="section">   
 </div>
-				</div>
-			</div>
-			<div class="item ">
-				<div class="carousel-caption">
-					<h2 id="Get_it_now">Get it now</h2>
+		</div>
+		<div class="span6">
+			<h2 id="Overview">Overview</h2>
+<p>Base Maven projects on this artifact and you will get many pre-configuration benefits, including up-to-date dependencies, plugins, build extensions, repositories, and more. </p>
+<div class="section">    
+</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span6">
+			<h2 id="Get_it_now">Get it now</h2>
 <p>All that you need to do is to define our artifact as a parent of your project:</p>
 <div class="source"> 
  <div class="source"> 
@@ -124,7 +132,7 @@
   &lt;parent&gt;
     &lt;groupId&gt;org.maxur&lt;/groupId&gt;
     &lt;artifactId&gt;maxur-base&lt;/artifactId&gt;
-    &lt;version&gt;0.1&lt;/version&gt;
+    &lt;version&gt;0.8&lt;/version&gt;
   &lt;/parent&gt;
   &lt;groupId&gt;your-group-id&lt;/groupId&gt;
   &lt;artifactId&gt;your-artifact-id&lt;/artifactId&gt;
@@ -134,14 +142,144 @@
 </pre> 
  </div> 
 </div>
-<ul> 
- <li><a class="externalLink" href="https://github.com/myunusov/maxur-base">GitHub</a></li> 
-</ul>
-				</div>
-			</div>
+<div class="section">        
+</div>
 		</div>
-		<a class="left carousel-control" href="#carousel0" data-slide="prev">&lsaquo;</a>
-		<a class="right carousel-control" href="#carousel0" data-slide="next">&rsaquo;</a>
+		<div class="span6">
+			<h2 id="Profiles">Profiles</h2>
+<div class="section">       
+</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span6">
+			<h3 id="gh-pages">gh-pages</h3>
+<p>This profile can be activated manually: </p>
+<div class="source"> 
+ <div class="source"> 
+  <pre>$ mvn clean install -Pgh-pages
+</pre> 
+ </div> 
+</div>
+<p>This plugin can deploy site without SSH key by OAuth Token.</p>
+<p><b>settings.xml</b> <tt>xml &lt;server&gt; &lt;id&gt;github&lt;/id&gt; &lt;password&gt;OAuthToken&lt;/password&gt; &lt;/server&gt; </tt></p>
+<p>It configures site deployment to github pages. See <a class="externalLink" href="http://pages.github.com/">http://pages.github.com/</a></p>
+<div class="section">    
+</div>
+		</div>
+		<div class="span6">
+			<h3 id="gpg">gpg</h3>
+<p>Sign artifacts before installation with GPG. To enable this profile you should have “gpg.keyname” property defined.</p>
+<p><a class="externalLink" href="https://maven.apache.org/plugins/maven-gpg-plugin/">maven-gpg-plugin</a> used to GPG-sign the artifact before deployment to foreign repository. GPG keys have to be provided in CI environment, and published beforehand.<br /><a class="externalLink" href="http://www.sonatype.com/people/2010/01/how-to-generate-pgp-signatures-with-maven/">http://www.sonatype.com/people/2010/01/how-to-generate-pgp-signatures-with-maven/</a></p>
+<div class="section">           
+</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span6">
+			<h3 id="inspect">inspect</h3>
+<p>This profile can be activated manually:</p>
+<div class="source"> 
+ <div class="source"> 
+  <pre>$ mvn clean install -Pinspect
+</pre> 
+ </div> 
+</div>
+<p>It runs a number of checks to make sure the quality of the build is acceptable. </p>
+<p>These plugins are used at the moment to control quality and prevent errors</p>
+<p><a class="externalLink" href="https://github.com/basepom/duplicate-finder-maven-plugin">maven-duplicate-finder-plugin</a> is a filter of duplicate classes and resources in classpath. It helps to identify dependencies that are not used, or the ones that are used but not defined.</p>
+<p><a class="externalLink" href="http://www.qulice.com/qulice-maven-plugin/">qulice-maven-plugin</a> is a compound static analysis tools that aggregates</p>
+<ul> 
+ <li>Checkstyle</li> 
+ <li>PMD</li> 
+ <li>FindBugs</li> 
+ <li>CodeNarc (for Groovy code)</li> 
+ <li>a few other plugins in one bucket.</li> 
+</ul>
+<p>It is expected by default that your <b>LICENSE.txt</b> is located in a root directory of every module.</p>
+<p>All plugins are bound to the <i>verify</i> Maven phase. All executions are named <i>maxur-check</i>.</p>
+<div class="section">   
+</div>
+		</div>
+		<div class="span6">
+			<h3 id="site">site</h3>
+<p>The profile builds site for production environment. </p>
+<div class="section">          
+</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span6">
+			<h3 id="sonar">sonar</h3>
+<p>The profile is activated automatically when you have a <b>sonar.properties</b> file in a root directory.</p>
+<p>For example ```</p>
+		</div>
+		<div class="span6">
+			<h1>Sonar</h1>
+<p>sonar.sourceEncoding = UTF-8 sonar.language = java</p>
+<p>sonar.host.url = <a class="externalLink" href="http://192.168.1.1:9000">http://192.168.1.1:9000</a> sonar.jdbc.url = jdbc:<a class="externalLink" href="postgresql://192.168.1.1:5432/sonar">postgresql://192.168.1.1:5432/sonar</a> sonar.jdbc.driverClassName = org.postgresql.Driver sonar.jdbc.username = sonar sonar.jdbc.password = sonar</p>
+<p>sonar.forceAnalysis = true</p>
+<p>sonar.artifact.path= ```</p>
+<p>It configures <a class="externalLink" href="http://docs.sonarqube.org/display/SONAR/Analyzing+with+Maven">sonar-maven-plugin</a>.</p>
+<div class="section">   
+</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span6">
+			<h3 id="sonatype">sonatype</h3>
+<p>The profile deploys all artifacts to oss.sonatype.org repository . It also skips default deployment plugin.</p>
+<div class="section">      
+</div>
+		</div>
+		<div class="span6">
+			<h2 id="Implicit_Profiles">Implicit Profiles</h2>
+<div class="section">    
+</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span6">
+			<h3 id="clover">clover</h3>
+<p>The profile is activated automatically when you have a <b>clover.license</b> file in a root directory.</p>
+<p>It configures <a class="externalLink" href="https://docs.atlassian.com/maven-clover2-plugin/2.3.1/">maven-clover2-plugin</a> for check and report tasks.</p>
+<div class="section">    
+</div>
+		</div>
+		<div class="span6">
+			<h3 id="dep-junit">dep-junit</h3>
+<p>Enable unit testing. The profile is activated when you have <b>src/test/java directory</b> in the project. These artifacts are automatically added to the list of dependencies (in test scope, of course):</p>
+<ul> 
+ <li><a class="externalLink" href="http://junit.org/">junit:junit</a>: unit testing framework</li> 
+ <li><a class="externalLink" href="http://joel-costigliola.github.io/assertj/">org.assertj:assertj-core</a>: assertion framework</li> 
+ <li><a class="externalLink" href="http://jmockit.org/">org.jmockit:jmockit</a>: mocking framework</li> 
+</ul>
+<div class="section">   
+</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span6">
+			<h3 id="dep-log4j">dep-log4j</h3>
+<p>Enable <a class="externalLink" href="http://logging.apache.org/log4j/">LOG4J</a> for logging and <a class="externalLink" href="http://www.slf4j.org/">SLF4J</a> binding. The profile is activated when you have <b>src/test/resources/log4j.properties</b>.</p>
+<div class="section">   
+</div>
+		</div>
+		<div class="span6">
+			<h3 id="dep-logback">dep-logback</h3>
+<p>Enable <a class="externalLink" href="http://logback.qos.ch/">logback</a> for logging and <a class="externalLink" href="http://www.slf4j.org/">SLF4J</a> binding. The profile is activated when you have <b>src/test/resources/logback.xml</b>.</p>
+<div class="section">   
+</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span6">
+			<h2 id="Links">Links</h2>
+<ul> 
+ <li><a class="externalLink" href="http://myunusov.github.io/maxur-base/">Development documentations</a></li> 
+ <li><a class="externalLink" href="https://github.com/myunusov/maxur-base">GitHub Project</a></li> 
+</ul>
+		</div>
 	</div>
 	</div>
 
@@ -158,26 +296,26 @@
 						<li >
 							<a href="project-info.html" title="Project Information">Project Information <i class="icon-chevron-down"></i></a>
 							<ul class="nav nav-list">
-						<li >
-							<a href="integration.html" title="Continuous Integration">Continuous Integration</a>
-						</li>
 						<li class="active">
 							<a href="#" title="About">About</a>
-						</li>
-						<li >
-							<a href="issue-tracking.html" title="Issue Tracking">Issue Tracking</a>
 						</li>
 						<li >
 							<a href="license.html" title="Project License">Project License</a>
 						</li>
 						<li >
-							<a href="plugins.html" title="Project Plugins">Project Plugins</a>
-						</li>
-						<li >
 							<a href="team-list.html" title="Project Team">Project Team</a>
 						</li>
 						<li >
+							<a href="issue-tracking.html" title="Issue Tracking">Issue Tracking</a>
+						</li>
+						<li >
 							<a href="source-repository.html" title="Source Repository">Source Repository</a>
+						</li>
+						<li >
+							<a href="integration.html" title="Continuous Integration">Continuous Integration</a>
+						</li>
+						<li >
+							<a href="plugins.html" title="Project Plugins">Project Plugins</a>
 						</li>
 						<li >
 							<a href="project-summary.html" title="Project Summary">Project Summary</a>
@@ -209,7 +347,7 @@
 			<div class="span12">
 				<p class="pull-right"><a href="#">Back to top</a></p>
 				<p class="copyright">Copyright &copy;2015 <a href="http://www.maxur.org">Maxim Yunusov</a>. All Rights Reserved.</p>
-				<p class="version-date"><span class="projectVersion">Version: 0.6. </span><span class="publishDate">Last Published: 2015-10-28. </span></p>
+				<p class="version-date"><span class="projectVersion">Version: 0.7. </span><span class="publishDate">Last Published: 2015-10-28. </span></p>
 				<p><a href="http://github.com/andriusvelykis/reflow-maven-skin" title="Reflow Maven skin">Reflow Maven skin</a> by <a href="http://andrius.velykis.lt" target="_blank" title="Andrius Velykis">Andrius Velykis</a>.</p>
 			</div>
 		</div>
