@@ -15,6 +15,8 @@
 Base Maven projects on this artifact and you will get many pre-configuration benefits, 
 including up-to-date dependencies, plugins, build extensions, repositories, and more. 
 
+## Get it now
+
 All that you need to do is to define our artifact as a parent of your project:
 
 ```xml
@@ -42,8 +44,7 @@ This profile can be activated manually:
 $ mvn clean install -Pgh-pages
 ```
 
-It configures site deployment to github pages. See http://pages.github.com/
-            
+This plugin can deploy site without SSH key by OAuth Token.
 
 **settings.xml**
 ```xml
@@ -52,7 +53,9 @@ It configures site deployment to github pages. See http://pages.github.com/
     <password>OAuthToken</password>
 </server>
 ```
-            
+
+It configures site deployment to github pages. See http://pages.github.com/
+                    
 
 ###gpg
 
@@ -149,6 +152,7 @@ Enable [LOG4J] (http://logging.apache.org/log4j/) for logging and [SLF4J] (http:
 
 Enable [logback] (http://logback.qos.ch/) for logging and [SLF4J] (http://www.slf4j.org/) binding. The profile is activated when you have **src/test/resources/logback.xml**.
 
-## Development documentation 
+## Links  
 
-http://myunusov.github.io/maxur-base/
+* [Development documentations] (http://myunusov.github.io/maxur-base/)
+* [GitHub Project](https://github.com/myunusov/maxur-base)

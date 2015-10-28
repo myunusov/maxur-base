@@ -33,13 +33,6 @@
         <project.source.compile>1.8</project.source.compile>
         <project.target.compile>1.8</project.target.compile>
 
-        <!--
-                - settings.xml -
-                <server>
-                    <id>github</id>
-                    <password>OAuthToken</password>
-                </server>
-        -->
         <github.global.server>github</github.global.server>
 
         <maven-clover2-plugin.version>4.0.6</maven-clover2-plugin.version>
@@ -275,9 +268,6 @@
                     <exists>${basedir}/src/site/resources/CNAME</exists>
                 </file>
             </activation>
-            <properties>
-                <github.global.server>github</github.global.server>
-            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -378,14 +368,14 @@
                                     <reportSets>
                                         <reportSet>
                                             <reports>
+                                                <report>index</report>
+                                                <report>license</report>
+                                                <report>project-team</report>
+                                                <report>issue-tracking</report>
+                                                <report>scm</report>
                                                 <report>cim</report>
                                                 <report>dependencies</report>
-                                                <report>index</report>
-                                                <report>issue-tracking</report>
-                                                <report>license</report>
                                                 <report>plugins</report>
-                                                <report>project-team</report>
-                                                <report>scm</report>
                                                 <report>summary</report>
                                             </reports>
                                         </reportSet>
