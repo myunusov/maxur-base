@@ -25,7 +25,7 @@ All that you need to do is to define our artifact as a parent of your project:
   <parent>
     <groupId>org.maxur</groupId>
     <artifactId>maxur-base</artifactId>
-    <version>0.8</version>
+    <version>0.7</version>
   </parent>
   <groupId>your-group-id</groupId>
   <artifactId>your-artifact-id</artifactId>
@@ -46,7 +46,8 @@ $ mvn clean install -Pgh-pages
 
 This plugin can deploy site without SSH key by OAuth Token.
 
-**settings.xml**
+*settings.xml*
+
 ```xml
 <server>
     <id>github</id>
@@ -102,10 +103,9 @@ The profile builds site for production environment.
 
 The profile is activated automatically when you have a **sonar.properties** file in a root directory.
 
-For example
-```
-#Sonar
+*sonar.properties*
 
+```properties
 sonar.sourceEncoding = UTF-8
 sonar.language = java
 
@@ -133,7 +133,6 @@ It also skips default deployment plugin.
 The profile is activated automatically when you have a **clover.license** file in a root directory.
 
 It configures [maven-clover2-plugin] (https://docs.atlassian.com/maven-clover2-plugin/2.3.1/) for check and report tasks.
-
 
 ###dep-junit
             
