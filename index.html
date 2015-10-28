@@ -147,7 +147,7 @@
 		</div>
 		<div class="span6">
 			<h2 id="Profiles">Profiles</h2>
-<div class="section">       
+<div class="section">        
 </div>
 		</div>
 	</div>
@@ -162,7 +162,16 @@
  </div> 
 </div>
 <p>This plugin can deploy site without SSH key by OAuth Token.</p>
-<p><b>settings.xml</b> <tt>xml &lt;server&gt; &lt;id&gt;github&lt;/id&gt; &lt;password&gt;OAuthToken&lt;/password&gt; &lt;/server&gt; </tt></p>
+<p><i>settings.xml</i></p>
+<div class="source"> 
+ <div class="source"> 
+  <pre>&lt;server&gt;
+    &lt;id&gt;github&lt;/id&gt;
+    &lt;password&gt;OAuthToken&lt;/password&gt;
+&lt;/server&gt;
+</pre> 
+ </div> 
+</div>
 <p>It configures site deployment to github pages. See <a class="externalLink" href="http://pages.github.com/">http://pages.github.com/</a></p>
 <div class="section">    
 </div>
@@ -204,7 +213,7 @@
 		<div class="span6">
 			<h3 id="site">site</h3>
 <p>The profile builds site for production environment. </p>
-<div class="section">        
+<div class="section">      
 </div>
 		</div>
 	</div>
@@ -212,10 +221,24 @@
 		<div class="span6">
 			<h3 id="sonar">sonar</h3>
 <p>The profile is activated automatically when you have a <b>sonar.properties</b> file in a root directory.</p>
-<p><i>For example</i> ``` sonar.sourceEncoding = UTF-8 sonar.language = java</p>
-<p>sonar.host.url = <a class="externalLink" href="http://192.168.1.1:9000">http://192.168.1.1:9000</a> sonar.jdbc.url = jdbc:<a class="externalLink" href="postgresql://192.168.1.1:5432/sonar">postgresql://192.168.1.1:5432/sonar</a> sonar.jdbc.driverClassName = org.postgresql.Driver sonar.jdbc.username = sonar sonar.jdbc.password = sonar</p>
-<p>sonar.forceAnalysis = true</p>
-<p>sonar.artifact.path= ```</p>
+<p><i>sonar.properties</i></p>
+<div class="source"> 
+ <div class="source"> 
+  <pre>sonar.sourceEncoding = UTF-8
+sonar.language = java
+
+sonar.host.url = http://192.168.1.1:9000
+sonar.jdbc.url = jdbc:postgresql://192.168.1.1:5432/sonar
+sonar.jdbc.driverClassName = org.postgresql.Driver
+sonar.jdbc.username = sonar
+sonar.jdbc.password = sonar
+
+sonar.forceAnalysis = true
+
+sonar.artifact.path=
+</pre> 
+ </div> 
+</div>
 <p>It configures <a class="externalLink" href="http://docs.sonarqube.org/display/SONAR/Analyzing+with+Maven">sonar-maven-plugin</a>.</p>
 <div class="section">   
 </div>
