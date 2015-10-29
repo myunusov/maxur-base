@@ -36,6 +36,11 @@ All that you need to do is to define our artifact as a parent of your project:
 
 ##Profiles
 
+###clover
+The profile is activated automatically when you have a **clover.license** file in a root directory.
+
+It configures [maven-clover2-plugin] (https://docs.atlassian.com/maven-clover2-plugin/2.3.1/) for check and report tasks.
+
 ###gh-pages
             
 This profile can be activated manually: 
@@ -128,11 +133,6 @@ The profile deploys all artifacts to oss.sonatype.org repository .
 It also skips default deployment plugin.
             
 ##Implicit Profiles
-
-###clover
-The profile is activated automatically when you have a **clover.license** file in a root directory.
-
-It configures [maven-clover2-plugin] (https://docs.atlassian.com/maven-clover2-plugin/2.3.1/) for check and report tasks.
 
 ###dep-junit
             
