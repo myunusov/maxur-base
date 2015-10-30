@@ -40,8 +40,7 @@ Name | Description | Value | Default Value
 ------------ | ------------- | ------------- | -------------
 env | Target environment | dev, qa, prod | dev 
 project.root | For multi-module projects it is the root project path | path | .
-project.source.compile | The -source argument for the Java compiler. | java version | 1.8
-project.target.compile | The -target argument for the Java compiler. | java version | 1.8
+project.jdk  | The version of JDK. | java version | 1.8
 snapshot.allowed.artifacts | List of dependency patterns to exclude when checking for snapshot versions | list of patterns | org.maxur:*
 
 ##Profiles

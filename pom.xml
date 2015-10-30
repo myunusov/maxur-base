@@ -20,9 +20,11 @@
     <properties>
         <env>dev</env>
         <project.root>.</project.root>
-        <project.source.compile>1.8</project.source.compile>
-        <project.target.compile>1.8</project.target.compile>
+        <project.jdk>1.8</project.jdk>
         <snapshot.allowed.artifacts>org.maxur:*</snapshot.allowed.artifacts>
+
+        <project.source.compile>${project.jdk}</project.source.compile>
+        <project.target.compile>${project.jdk}</project.target.compile>
 
         <project.source.encoding>UTF-8</project.source.encoding>
         <project.build.sourceEncoding>${project.source.encoding}</project.build.sourceEncoding>
