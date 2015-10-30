@@ -34,9 +34,40 @@ All that you need to do is to define our artifact as a parent of your project:
 </project>
 ```
 
+##Properties
+
+Name | Description | Value | Default Value  
+------------ | ------------- | ------------- | -------------
+env | Target environment | dev, qa, prod | dev 
+project.root | For multi-module projects it is the root project path | path | .
+project.source.compile | The -source argument for the Java compiler. | java version | 1.8
+project.target.compile | The -target argument for the Java compiler. | java version | 1.8
+snapshot.allowed.artifacts | List of dependency patterns to exclude when checking for snapshot versions | list of patterns | org.maxur:*
+
 ##Profiles
 
+ - [announcement](#announcement)
+ - [clover](#clover)
+ - [gh-pages](#gh-pages)
+ - [gpg](#gpg)
+ - [inspect](#inspect)
+ - [site](#site)
+ - [sonar](#sonar)
+ - [sonatype](#sonatype)
+ 
+
+###announcement
+
+The profile is activated automatically when you have the target environment as production.
+
+```
+$ mvn clean install -Denv=prod
+```
+
+Generate an announcement from the announcement template
+
 ###clover
+
 The profile is activated automatically when you have a **clover.license** file in a root directory.
 
 It configures [maven-clover2-plugin] (https://docs.atlassian.com/maven-clover2-plugin/2.3.1/) for check and report tasks.
@@ -73,6 +104,7 @@ http://www.sonatype.com/people/2010/01/how-to-generate-pgp-signatures-with-maven
 
 ###inspect
 
+The profile is activated automatically when you have the target environment as qa.
 This profile can be activated manually:
 
 ```
@@ -133,6 +165,11 @@ The profile deploys all artifacts to oss.sonatype.org repository .
 It also skips default deployment plugin.
             
 ##Implicit Profiles
+
+ - [dep-junit](#dep-junit)
+ - [dep-log4j](#dep-log4j)
+ - [dep-logback](#dep-logback)
+ 
 
 ###dep-junit
             

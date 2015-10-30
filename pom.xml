@@ -18,7 +18,11 @@
     <description>Parent POM.xml with most oftenly used pre-configured features</description>
 
     <properties>
+        <env>dev</env>
         <project.root>.</project.root>
+        <project.source.compile>1.8</project.source.compile>
+        <project.target.compile>1.8</project.target.compile>
+        <snapshot.allowed.artifacts>org.maxur:*</snapshot.allowed.artifacts>
 
         <project.source.encoding>UTF-8</project.source.encoding>
         <project.build.sourceEncoding>${project.source.encoding}</project.build.sourceEncoding>
@@ -29,9 +33,6 @@
         later in the file
         -->
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
-
-        <project.source.compile>1.8</project.source.compile>
-        <project.target.compile>1.8</project.target.compile>
 
         <github.global.server>github</github.global.server>
 
@@ -120,22 +121,32 @@
 
     <profiles>
         <profile>
-            <id>env-dev</id>
-            <properties>
-                <env>dev</env>
-            </properties>
+            <id>debug</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-help-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>maxur-help</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>active-profiles</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <profile>
-            <id>env-qa</id>
-            <properties>
-                <env>qa</env>
-            </properties>
-        </profile>
-        <profile>
-            <id>env-prod</id>
-            <properties>
-                <env>prod</env>
-            </properties>
+            <id>announcement</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>prod</value>
+                </property>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -208,6 +219,12 @@
 
         <profile>
             <id>inspect</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>qa</value>
+                </property>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -281,6 +298,7 @@
                         <artifactId>site-maven-plugin</artifactId>
                         <configuration>
                             <message>site for ${project.version}</message>
+                             <!--XXX-->
                             <path>${site.path}</path>
                             <merge>true</merge>
                         </configuration>
@@ -1077,25 +1095,25 @@
                             <rules>
                                 <requireProperty>
                                     <property>env</property>
-                                    <message>You must specify one of the following profiles: evn-dev, env-qa,
-                                        env-prod!
+                                    <message>
+                                        You must specify one of the following value of property: dev, qa, prod!
                                     </message>
                                     <regex>(dev|qa|prod)</regex>
                                     <regexMessage>
-                                        You must specify one of the following profiles: env-dev, env-qa, env-prod!
+                                        You must specify one of the following value of property: dev, qa, prod!
                                     </regexMessage>
                                 </requireProperty>
                                 <requireMavenVersion>
                                     <version>[3.0.4,)</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <version>[1.8,)</version>
+                                    <version>[${project.source.compile},)</version>
                                 </requireJavaVersion>
                                 <requireReleaseDeps>
                                     <message>No Snapshots Allowed!</message>
                                     <failWhenParentIsSnapshot>false</failWhenParentIsSnapshot>
                                     <excludes>
-                                        <exclude>org.maxur:*</exclude>
+                                        <exclude>${snapshot.allowed.artifacts}</exclude>
                                     </excludes>
                                 </requireReleaseDeps>
                                 <requireUpperBoundDeps/>
@@ -1132,7 +1150,7 @@
         <!--
         Rudimentary section, for Maven 2.0 plugins mostly.
         -->
-        <excludeDefaults/>
+        <excludeDefaults>true</excludeDefaults>
     </reporting>
 
 
