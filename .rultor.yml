@@ -10,4 +10,4 @@ release:
   script: |
     mvn versions:set "-DnewVersion=${tag}" -Penv-prod
     git commit -am "${tag}"
-    mvn clean site com.github.github:site-maven-plugin:site deploy --settings /home/r/settings.xml -Denv=prod -Pmaxur-base,sonatype,site
+    mvn clean site com.github.github:site-maven-plugin:site deploy --settings /home/r/settings.xml -Denv=prod -Pmaxur-base,sonatype,site,self-doc
