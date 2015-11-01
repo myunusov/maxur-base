@@ -355,6 +355,13 @@
                     <exists>maxur-base-doc/src/site/resources/CNAME</exists>
                 </file>
             </activation>
+            <distributionManagement>
+                <site>
+                    <id>${github.global.server}</id>
+                    <name>Deployment through GitHub's site deployment plugin</name>
+                    <url>git:ssh://git@github.com/myunusov/maxur-base.git?gh-pages#</url>
+                </site>
+            </distributionManagement>
             <build>
                 <plugins>
                     <plugin>
