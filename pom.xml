@@ -38,7 +38,7 @@
 
         <github.global.server>github</github.global.server>
 
-        <site.path>${project.basedir}/src/site</site.path>
+        <site.path>${basedir}/src/site</site.path>
         <site.skip>true</site.skip>
 
         <maven-clover2-plugin.version>4.0.6</maven-clover2-plugin.version>
@@ -122,7 +122,7 @@
         <profile>
             <id>self-doc</id>
             <properties>
-                <site.path>${project.basedir}/src/site</site.path>
+                <site.path>${basedir}/src/site</site.path>
                 <site.skip>false</site.skip>
             </properties>
             <distributionManagement>
@@ -146,7 +146,7 @@
                                 <configuration>
                                     <tasks>
                                         <echo>Copy README.md to site/index.md</echo>
-                                        <copy file="${project.basedir}/README.md" tofile="${site.path}/markdown/index.md"/>
+                                        <copy file="${basedir}/README.md" tofile="${site.path}/markdown/index.md"/>
                                     </tasks>
                                 </configuration>
                             </execution>
