@@ -122,7 +122,7 @@
         <profile>
             <id>self-doc</id>
             <properties>
-                <site.path>${project.basedir}/src/base-site</site.path>
+                <site.path>${project.basedir}/src/site</site.path>
                 <site.skip>false</site.skip>
             </properties>
             <distributionManagement>
@@ -146,7 +146,7 @@
                                 <configuration>
                                     <tasks>
                                         <echo>Copy README.md to site/index.md</echo>
-                                        <copy file="${project.basedir}/README.md" tofile="${project.root}/src/base-site/markdown/index.md"/>
+                                        <copy file="${project.basedir}/README.md" tofile="${site.path}/markdown/index.md"/>
                                     </tasks>
                                 </configuration>
                             </execution>
@@ -385,7 +385,7 @@
                         <configuration>
                             <message>site for ${project.version}</message>
                             <path>${site.path}</path>
-                            <merge>false</merge>
+                            <merge>true</merge>
                         </configuration>
                         <executions>
                             <execution>
