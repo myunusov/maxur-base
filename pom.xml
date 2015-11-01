@@ -368,16 +368,9 @@
             <id>gh-pages</id>
             <activation>
                 <file>
-                    <exists>maxur-base-doc/src/site/resources/CNAME</exists>
+                    <exists>${site.path}/resources/CNAME</exists>
                 </file>
             </activation>
-            <distributionManagement>
-                <site>
-                    <id>${github.global.server}</id>
-                    <name>Deployment through GitHub's site deployment plugin</name>
-                    <url>git:ssh://git@github.com/myunusov/maxur-base.git?gh-pages#</url>
-                </site>
-            </distributionManagement>
             <build>
                 <plugins>
                     <plugin>
@@ -391,7 +384,6 @@
                         <artifactId>site-maven-plugin</artifactId>
                         <configuration>
                             <message>site for ${project.version}</message>
-                            <!--XXX-->
                             <path>${site.path}</path>
                             <merge>false</merge>
                         </configuration>
