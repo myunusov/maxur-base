@@ -6,7 +6,7 @@
 
     <groupId>org.maxur</groupId>
     <artifactId>maxur-base</artifactId>
-    <version>0.9-SNAPSHOT</version>
+    <version>0.9</version>
     <packaging>pom</packaging>
 
     <inceptionYear>2015</inceptionYear>
@@ -102,13 +102,6 @@
             <id>oss.sonatype.org</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
-
-        <site>
-            <id>${github.global.server}</id>
-            <name>Deployment through GitHub's site deployment plugin</name>
-            <url>git:ssh://git@github.com/myunusov/maxur-base.git?gh-pages#</url>
-        </site>
-
     </distributionManagement>
 
     <issueManagement>
@@ -132,6 +125,14 @@
                 <site.path>${basedir}/src/site</site.path>
                 <site.skip>false</site.skip>
             </properties>
+
+            <distributionManagement>
+                <site>
+                    <id>${github.global.server}</id>
+                    <name>Deployment through GitHub's site deployment plugin</name>
+                    <url>git:ssh://git@github.com/myunusov/maxur-base.git?gh-pages#</url>
+                </site>
+            </distributionManagement>
 
             <build>
                 <plugins>
@@ -570,6 +571,35 @@
                                     <head>Suppressed Checkstyle violations:</head>
                                 </tag>
                             </tags>
+
+                            <source>${project.source.compile}</source>
+                            <encoding>${project.source.encoding}</encoding>
+                            <charset>${project.source.encoding}</charset>
+                            <docencoding>${project.source.encoding}</docencoding>
+                            <breakiterator>true</breakiterator>
+                            <version>true</version>
+                            <author>true</author>
+                            <keywords>true</keywords>
+
+                            <linksource>true</linksource>
+                            <excludePackageNames>*.it,*.test</excludePackageNames>
+                            <aggregate>true</aggregate>
+
+                            <additionalparam>
+                                -inferrel -inferdep -quiet -hide java.*
+                                -collpackages java.util.* -qualify
+                                -postfixpackage -nodefontsize 9
+                                -nodefontpackagesize 7
+                                -edgefontname "Trebuchet MS"
+                                -nodefontabstractname "Trebuchet MS"
+                                -nodefontclassabstractname "Trebuchet MS"
+                                -nodefontclassname "Trebuchet MS"
+                                -nodefontname "Trebuchet MS"
+                                -nodefontpackagename "Trebuchet MS"
+                                -nodefonttagname "Trebuchet MS"
+                                -view
+                            </additionalparam>
+
                         </configuration>
                         <reportSets>
                             <reportSet>
