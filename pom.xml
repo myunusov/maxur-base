@@ -43,6 +43,8 @@
 
         <maven-clover2-plugin.version>4.0.6</maven-clover2-plugin.version>
 
+        <groovy.version>2.4.5</groovy.version>
+        <spock.version>1.0-groovy-2.4</spock.version>
         <slf4j.version>1.7.12</slf4j.version>
         <logback.version>1.1.3</logback.version>
         <jmockit.version>1.20</jmockit.version>
@@ -51,6 +53,7 @@
         <guava.version>18.0</guava.version>
         <junit.version>4.12</junit.version>
         <log4j.version>2.4.1</log4j.version>
+        <objenesis.version>2.2</objenesis.version>
     </properties>
 
     <organization>
@@ -303,11 +306,6 @@
                                 <artifactId>checkstyle</artifactId>
                                 <version>6.11.2</version>
                             </dependency>
-                            <dependency>
-                                <groupId>org.maxur.perfmodel</groupId>
-                                <artifactId>tools</artifactId>
-                                <version>2.2-SNAPSHOT</version>
-                            </dependency>
                         </dependencies>
                         <executions>
                             <execution>
@@ -319,11 +317,6 @@
                                 </goals>
                             </execution>
                         </executions>
-                        <configuration>
-                            <consoleOutput>true</consoleOutput>
-                            <configLocation>maxur-check-style.xml</configLocation>
-                            <headerLocation>java.header</headerLocation>
-                        </configuration>
                     </plugin>
 
                     <plugin>
@@ -692,6 +685,88 @@
         </profile>
 
         <profile>
+            <id>dep-spock</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/src/test/groovy</exists>
+                </file>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.spockframework</groupId>
+                    <artifactId>spock-core</artifactId>
+                    <version>${spock.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.codehaus.groovy</groupId>
+                    <artifactId>groovy-all</artifactId>
+                    <version>${groovy.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.objenesis</groupId>
+                    <artifactId>objenesis</artifactId>
+                    <version>${objenesis.version}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <!-- Mandatory plugins for using Spock -->
+                    <plugin>
+                        <!-- The gmavenplus plugin is used to compile Groovy code. To learn more about this plugin,
+                        visit https://github.com/groovy/GMavenPlus/wiki -->
+                        <groupId>org.codehaus.gmavenplus</groupId>
+                        <artifactId>gmavenplus-plugin</artifactId>
+                        <version>1.4</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>compile</goal>
+                                    <goal>testCompile</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.codehaus.gmaven.runtime</groupId>
+                                <artifactId>gmaven-runtime-2.0</artifactId>
+                                <version>1.5</version>
+                                <exclusions>
+                                    <exclusion>
+                                        <groupId>org.codehaus.groovy</groupId>
+                                        <artifactId>groovy-all</artifactId>
+                                    </exclusion>
+                                </exclusions>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.codehaus.groovy</groupId>
+                                <artifactId>groovy-all</artifactId>
+                                <version>${groovy.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                    <!-- Optional plugins for using Spock -->
+                    <!-- Only required if names of spec classes don't match default Surefire patterns (`*Test` etc.) -->
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <useFile>true</useFile>
+                            <skipTests>false</skipTests>
+                            <includes>
+                                <!-- By default only files ending in 'Test' will be included, so also include support for Spock style naming convention -->
+                                <!-- Oddly enough for Groovy files, *Spec.groovy does not work, but *Spec.java does -->
+                                <include>**/*Test.java</include>
+                                <include>**/*Spec.java</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
             <id>dep-log4j</id>
             <activation>
                 <file>
@@ -941,6 +1016,25 @@
                 <scope>test</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.spockframework</groupId>
+                <artifactId>spock-core</artifactId>
+                <version>${spock.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>${groovy.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.objenesis</groupId>
+                <artifactId>objenesis</artifactId>
+                <version>${objenesis.version}</version>
+                <scope>test</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -1167,7 +1261,7 @@
                 <plugin>
                     <groupId>com.qulice</groupId>
                     <artifactId>qulice-maven-plugin</artifactId>
-                    <version>0.13</version>
+                    <version>0.13.1</version>
                     <configuration>
                         <license>file:${basedir}/LICENSE.txt</license>
                     </configuration>
