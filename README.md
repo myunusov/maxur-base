@@ -179,9 +179,9 @@ These artifacts are automatically added to the list of dependencies (in test sco
  * [org.assertj:assertj-core] (http://joel-costigliola.github.io/assertj/): assertion framework
  * [org.jmockit:jmockit] (http://jmockit.org/): mocking framework
             
-###dep-log4j
+###dep-log4j 
           
-Enable [LOG4J] (http://logging.apache.org/log4j/) for logging and [SLF4J] (http://www.slf4j.org/) binding. The profile is activated when you have **src/test/resources/log4j.properties**.
+Enable [LOG4J2] (https://logging.apache.org/log4j/2.x/) for logging and [SLF4J] (http://www.slf4j.org/) binding. The profile is activated when you have **src/test/resources/log4j2.xml**.
             
 ###dep-logback
 
