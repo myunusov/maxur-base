@@ -10,6 +10,8 @@
 
 [![DevOps By Rultor.com](http://www.rultor.com/b/myunusov/maxur-base)](http://www.rultor.com/p/myunusov/maxur-base)
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.maxur/maxur-base/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.maxur/maxur-base)
+
 ## Overview
 
 Base Maven projects on this artifact and you will get many pre-configuration benefits, 
