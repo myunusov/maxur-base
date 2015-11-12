@@ -1,15 +1,10 @@
 # Base POM
-
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/myunusov/maxur-base/master/LICENSE)
 [![Build Status](https://travis-ci.org/myunusov/maxur-base.svg?branch=master)](https://travis-ci.org/myunusov/maxur-base)
-
 [![Dependency Status](https://www.versioneye.com/user/projects/5626986c36d0ab0016001030/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5626986c36d0ab0016001030)
-
 [![Issue Stats](http://issuestats.com/github/myunusov/maxur-base/badge/pr)](http://issuestats.com/github/myunusov/maxur-base)
-
 [![Issue Stats](http://issuestats.com/github/myunusov/maxur-base/badge/issue)](http://issuestats.com/github/myunusov/maxur-base)
-
 [![DevOps By Rultor.com](http://www.rultor.com/b/myunusov/maxur-base)](http://www.rultor.com/p/myunusov/maxur-base)
-
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.maxur/maxur-base/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.maxur/maxur-base)
 
 ## Overview
