@@ -6,7 +6,7 @@
 
     <groupId>org.maxur</groupId>
     <artifactId>maxur-base</artifactId>
-    <version>0.10-SNAPSHOT</version>
+    <version>0.10</version>
     <packaging>pom</packaging>
 
     <inceptionYear>2015</inceptionYear>
@@ -41,20 +41,22 @@
         <site.path>${basedir}/src/site</site.path>
         <site.skip>true</site.skip>
 
-        <maven-clover2-plugin.version>4.0.6</maven-clover2-plugin.version>
 
-        <groovy.version>2.4.5</groovy.version>
-        <spock.version>1.0-groovy-2.4</spock.version>
-        <slf4j.version>1.7.12</slf4j.version>
+        <slf4j.version>1.7.13</slf4j.version>
         <logback.version>1.1.3</logback.version>
         <jmockit.version>1.20</jmockit.version>
         <assertj-core.version>3.2.0</assertj-core.version>
         <config.version>1.3.0</config.version>
         <guava.version>18.0</guava.version>
         <junit.version>4.12</junit.version>
-        <log4j.version>2.4.1</log4j.version>
-        <objenesis.version>2.2</objenesis.version>
-        <maven-surefire-report-plugin.version>2.19</maven-surefire-report-plugin.version>
+        <log4j.version>1.2.17</log4j.version>
+        <checkstyle.version>6.12.1</checkstyle.version>
+
+        <maven-clover2-plugin.version>4.0.6</maven-clover2-plugin.version>
+        <qulice-maven-plugin.version>0.13.2</qulice-maven-plugin.version>
+        <findbugs-maven-plugin.version>3.0.3</findbugs-maven-plugin.version>
+        <maven-filtering.version>3.0.0</maven-filtering.version>
+        <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
     </properties>
 
     <organization>
@@ -164,8 +166,9 @@
             <reporting>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-report-plugin</artifactId>
-                        <version>${maven-surefire-report-plugin.version}</version>
+                        <version>2.18.1</version>
                         <configuration>
                             <skipSurefireReport>true</skipSurefireReport>
                             <showSuccess>false</showSuccess>
@@ -304,7 +307,7 @@
                             <dependency>
                                 <groupId>com.puppycrawl.tools</groupId>
                                 <artifactId>checkstyle</artifactId>
-                                <version>6.12</version>
+                                <version>${checkstyle.version}</version>
                             </dependency>
                         </dependencies>
                         <executions>
@@ -317,6 +320,11 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <consoleOutput>true</consoleOutput>
+                            <configLocation>maxur-check-style.xml</configLocation>
+                            <headerLocation>java.header</headerLocation>
+                        </configuration>
                     </plugin>
 
                     <plugin>
@@ -443,7 +451,7 @@
                             <dependency>
                                 <groupId>net.trajano.wagon</groupId>
                                 <artifactId>wagon-git</artifactId>
-                                <version>2.0.4</version>
+                                <version>2.0.0</version>
                             </dependency>
                         </dependencies>
                         <configuration>
@@ -497,7 +505,7 @@
 
                     <plugin>
                         <artifactId>maven-jxr-plugin</artifactId>
-                        <version>2.5</version>
+                        <version>2.4</version>
                         <configuration>
                             <aggregate>true</aggregate>
                         </configuration>
@@ -505,7 +513,7 @@
 
                     <plugin>
                         <artifactId>maven-surefire-report-plugin</artifactId>
-                        <version>${maven-surefire-report-plugin.version}</version>
+                        <version>2.17</version>
                         <reportSets>
                             <reportSet>
                                 <reports>
@@ -631,7 +639,7 @@
 
                     <plugin>
                         <artifactId>maven-plugin-plugin</artifactId>
-                        <version>3.4</version>
+                        <version>3.3</version>
                     </plugin>
 
                     <plugin>
@@ -676,120 +684,26 @@
                     <artifactId>assertj-core</artifactId>
                     <scope>test</scope>
                 </dependency>
-                <dependency>
-                    <groupId>org.jmockit</groupId>
-                    <artifactId>jmockit</artifactId>
-                    <scope>test</scope>
-                </dependency>
             </dependencies>
-        </profile>
-
-        <profile>
-            <id>dep-spock</id>
-            <activation>
-                <file>
-                    <exists>${basedir}/src/test/groovy</exists>
-                </file>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>org.spockframework</groupId>
-                    <artifactId>spock-core</artifactId>
-                    <version>${spock.version}</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.codehaus.groovy</groupId>
-                    <artifactId>groovy-all</artifactId>
-                    <version>${groovy.version}</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.objenesis</groupId>
-                    <artifactId>objenesis</artifactId>
-                    <version>${objenesis.version}</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-            <build>
-                <plugins>
-                    <!-- Mandatory plugins for using Spock -->
-                    <plugin>
-                        <!-- The gmavenplus plugin is used to compile Groovy code. To learn more about this plugin,
-                        visit https://github.com/groovy/GMavenPlus/wiki -->
-                        <groupId>org.codehaus.gmavenplus</groupId>
-                        <artifactId>gmavenplus-plugin</artifactId>
-                        <version>1.5</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>compile</goal>
-                                    <goal>testCompile</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.codehaus.gmaven.runtime</groupId>
-                                <artifactId>gmaven-runtime-2.0</artifactId>
-                                <version>1.5</version>
-                                <exclusions>
-                                    <exclusion>
-                                        <groupId>org.codehaus.groovy</groupId>
-                                        <artifactId>groovy-all</artifactId>
-                                    </exclusion>
-                                </exclusions>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.codehaus.groovy</groupId>
-                                <artifactId>groovy-all</artifactId>
-                                <version>${groovy.version}</version>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
-                    <!-- Optional plugins for using Spock -->
-                    <!-- Only required if names of spec classes don't match default Surefire patterns (`*Test` etc.) -->
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <useFile>true</useFile>
-                            <skipTests>false</skipTests>
-                            <includes>
-                                <!-- By default only files ending in 'Test' will be included, so also include support for Spock style naming convention -->
-                                <!-- Oddly enough for Groovy files, *Spec.groovy does not work, but *Spec.java does -->
-                                <include>**/*Test.java</include>
-                                <include>**/*Spec.java</include>
-                            </includes>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
 
         <profile>
             <id>dep-log4j</id>
             <activation>
                 <file>
-                    <exists>${basedir}/src/test/resources/log4j2.xml</exists>
+                    <exists>${basedir}/src/test/resources/log4j.properties</exists>
                 </file>
             </activation>
             <dependencies>
                 <dependency>
                     <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                    <version>${slf4j.version}</version>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <scope>test</scope>
                 </dependency>
                 <dependency>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-slf4j-impl</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-api</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-core</artifactId>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                    <scope>test</scope>
                 </dependency>
             </dependencies>
         </profile>
@@ -844,12 +758,12 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>sonar-maven-plugin</artifactId>
-                        <version>2.7.1</version>
+                        <version>2.6</version>
                     </plugin>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>properties-maven-plugin</artifactId>
-                        <version>1.0-alpha-2</version>
+                        <version>${properties-maven-plugin.version}</version>
                         <executions>
                             <execution>
                                 <phase>initialize</phase>
@@ -951,6 +865,7 @@
                 <version>${slf4j.version}</version>
             </dependency>
             <dependency>
+                <!-- Forward all SLF4J calls to LOG4J. -->
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
                 <version>${slf4j.version}</version>
@@ -966,18 +881,9 @@
                 <version>${logback.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-slf4j-impl</artifactId>
-                <version>${log4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-api</artifactId>
-                <version>${log4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-core</artifactId>
+                <!-- Use LOG4J logging facility for all loggings. -->
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
                 <version>${log4j.version}</version>
             </dependency>
 
@@ -1016,25 +922,6 @@
                 <scope>test</scope>
             </dependency>
 
-            <dependency>
-                <groupId>org.spockframework</groupId>
-                <artifactId>spock-core</artifactId>
-                <version>${spock.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.codehaus.groovy</groupId>
-                <artifactId>groovy-all</artifactId>
-                <version>${groovy.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.objenesis</groupId>
-                <artifactId>objenesis</artifactId>
-                <version>${objenesis.version}</version>
-                <scope>test</scope>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -1053,7 +940,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>2.6.1</version>
                 </plugin>
 
                 <plugin>
@@ -1067,7 +954,7 @@
                         <dependency>
                             <groupId>org.apache.maven.shared</groupId>
                             <artifactId>maven-filtering</artifactId>
-                            <version>1.3</version>
+                            <version>${maven-filtering.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -1261,7 +1148,7 @@
                 <plugin>
                     <groupId>com.qulice</groupId>
                     <artifactId>qulice-maven-plugin</artifactId>
-                    <version>0.13.1</version>
+                    <version>${qulice-maven-plugin.version}</version>
                     <configuration>
                         <license>file:${basedir}/LICENSE.txt</license>
                     </configuration>
@@ -1286,7 +1173,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>findbugs-maven-plugin</artifactId>
-                    <version>3.0.2</version>
+                    <version>${findbugs-maven-plugin.version}</version>
                 </plugin>
 
                 <plugin>
@@ -1358,7 +1245,8 @@
                     <dependency>
                         <groupId>org.apache.maven.scm</groupId>
                         <artifactId>maven-scm-provider-gitexe</artifactId>
-                        <version>1.9.4</version>
+                        <!-- This version is necessary for use with git version 1.8.5 -->
+                        <version>1.8.1</version>
                     </dependency>
                 </dependencies>
             </plugin>
