@@ -42,21 +42,72 @@
         <site.skip>true</site.skip>
 
 
-        <slf4j.version>1.7.13</slf4j.version>
-        <logback.version>1.1.3</logback.version>
-        <jmockit.version>1.20</jmockit.version>
-        <assertj-core.version>3.2.0</assertj-core.version>
         <config.version>1.3.0</config.version>
         <guava.version>18.0</guava.version>
+        <objenesis.version>2.2</objenesis.version>
+
+        <logback.version>1.1.3</logback.version>
+        <log4j.version>2.4.1</log4j.version>
+        <slf4j.version>1.7.13</slf4j.version>
+
+        <assertj-core.version>3.2.0</assertj-core.version>
         <junit.version>4.12</junit.version>
-        <log4j.version>1.2.17</log4j.version>
+        <spock.version>1.0-groovy-2.4</spock.version>
+        <jmockit.version>1.20</jmockit.version>
+
+        <groovy.version>2.4.5</groovy.version>
         <checkstyle.version>6.12.1</checkstyle.version>
+        <reflow-velocity-tools.version>1.1.1</reflow-velocity-tools.version>
+        <velocity.version>1.7</velocity.version>
+        <wagon-git.version>2.0.4</wagon-git.version>
 
         <maven-clover2-plugin.version>4.0.6</maven-clover2-plugin.version>
         <qulice-maven-plugin.version>0.13.2</qulice-maven-plugin.version>
         <findbugs-maven-plugin.version>3.0.3</findbugs-maven-plugin.version>
         <maven-filtering.version>3.0.0</maven-filtering.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
+
+        <maven-surefire-report-plugin.version>2.19</maven-surefire-report-plugin.version>
+        <maven-changes-plugin.version>2.11</maven-changes-plugin.version>
+        <maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <maven-site-plugin.version>3.4</maven-site-plugin.version>
+        <maven-project-info-reports-plugin.version>2.8.1</maven-project-info-reports-plugin.version>
+        <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
+        <maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
+        <maven-plugin-plugin.version>3.4</maven-plugin-plugin.version>
+        <maven-changelog-plugin.version>2.3</maven-changelog-plugin.version>
+        <maven-help-plugin.version>2.2</maven-help-plugin.version>
+        <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
+        <maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
+        <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
+        <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>2.19</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>2.19</maven-failsafe-plugin.version>
+        <maven-scm-provider-gitexe.version>1.9.4</maven-scm-provider-gitexe.version>
+        <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
+        <maven-war-plugin.version>2.6</maven-war-plugin.version>
+        <maven-assembly-plugin.version>2.6</maven-assembly-plugin.version>
+        <maven-source-plugin.version>2.4</maven-source-plugin.version>
+        <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
+        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+        <maven-invoker-plugin.version>2.0</maven-invoker-plugin.version>
+        <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
+        <maven-pmd-plugin.version>3.5</maven-pmd-plugin.version>
+        <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
+
+        <nexus-staging-maven-plugin.version>1.6.6</nexus-staging-maven-plugin.version>
+        <versions-maven-plugin.version>2.2</versions-maven-plugin.version>
+        <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
+        <gmavenplus-plugin.version>1.5</gmavenplus-plugin.version>
+        <sonar-maven-plugin.version>2.7.1</sonar-maven-plugin.version>
+        <doxia-module-markdown.version>1.6</doxia-module-markdown.version>
+        <takari-lifecycle-plugin.version>1.11.11</takari-lifecycle-plugin.version>
+        <appassembler-maven-plugin.version>1.10</appassembler-maven-plugin.version>
+        <site-maven-plugin.version>0.12</site-maven-plugin.version>
+        <duplicate-finder-maven-plugin.version>1.2.1</duplicate-finder-maven-plugin.version>
+        <pitest-maven.version>1.1.7</pitest-maven.version>
     </properties>
 
     <organization>
@@ -166,9 +217,8 @@
             <reporting>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-report-plugin</artifactId>
-                        <version>2.18.1</version>
+                        <version>${maven-surefire-report-plugin.version}</version>
                         <configuration>
                             <skipSurefireReport>true</skipSurefireReport>
                             <showSuccess>false</showSuccess>
@@ -226,7 +276,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-changes-plugin</artifactId>
-                        <version>2.11</version>
+                        <version>${maven-changes-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>include-announcement-file</id>
@@ -309,11 +359,6 @@
                                 <artifactId>checkstyle</artifactId>
                                 <version>${checkstyle.version}</version>
                             </dependency>
-                            <dependency>
-                                <groupId>org.maxur.perfmodel</groupId>
-                                <artifactId>tools</artifactId>
-                                <version>2.2-SNAPSHOT</version>
-                            </dependency>
                         </dependencies>
                         <executions>
                             <execution>
@@ -325,11 +370,6 @@
                                 </goals>
                             </execution>
                         </executions>
-                        <configuration>
-                            <consoleOutput>true</consoleOutput>
-                            <configLocation>maxur-check-style.xml</configLocation>
-                            <headerLocation>java.header</headerLocation>
-                        </configuration>
                     </plugin>
 
                     <plugin>
@@ -366,7 +406,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-checkstyle-plugin</artifactId>
-                        <version>2.17</version>
+                        <version>${maven-checkstyle-plugin.version}</version>
                     </plugin>
                 </plugins>
             </reporting>
@@ -419,7 +459,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.6</version>
+                        <version>${maven-gpg-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>maxur-sign-artifacts</id>
@@ -440,23 +480,23 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-site-plugin</artifactId>
-                        <version>3.4</version>
+                        <version>${maven-site-plugin.version}</version>
                         <dependencies>
                             <dependency>
                                 <groupId>lt.velykis.maven.skins</groupId>
                                 <artifactId>reflow-velocity-tools</artifactId>
-                                <version>1.1.1</version>
+                                <version>${reflow-velocity-tools.version}</version>
                             </dependency>
                             <dependency>
                                 <!-- Reflow skin requires velocity 1.7 -->
                                 <groupId>org.apache.velocity</groupId>
                                 <artifactId>velocity</artifactId>
-                                <version>1.7</version>
+                                <version>${velocity.version}</version>
                             </dependency>
                             <dependency>
                                 <groupId>net.trajano.wagon</groupId>
                                 <artifactId>wagon-git</artifactId>
-                                <version>2.0.0</version>
+                                <version>${wagon-git.version}</version>
                             </dependency>
                         </dependencies>
                         <configuration>
@@ -485,7 +525,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-project-info-reports-plugin</artifactId>
-                        <version>2.8.1</version>
+                        <version>${maven-project-info-reports-plugin.version}</version>
                         <configuration>
                             <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
                             <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
@@ -510,7 +550,7 @@
 
                     <plugin>
                         <artifactId>maven-jxr-plugin</artifactId>
-                        <version>2.4</version>
+                        <version>${maven-jxr-plugin.version}</version>
                         <configuration>
                             <aggregate>true</aggregate>
                         </configuration>
@@ -518,7 +558,7 @@
 
                     <plugin>
                         <artifactId>maven-surefire-report-plugin</artifactId>
-                        <version>2.17</version>
+                        <version>${maven-surefire-report-plugin.version}</version>
                         <reportSets>
                             <reportSet>
                                 <reports>
@@ -535,7 +575,7 @@
                         -->
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>versions-maven-plugin</artifactId>
-                        <version>2.2</version>
+                        <version>${versions-maven-plugin.version}</version>
                         <reportSets>
                             <reportSet>
                                 <reports>
@@ -553,7 +593,7 @@
                         located at target/site/apidocs.
                         -->
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.10.3</version>
+                        <version>${maven-javadoc-plugin.version}</version>
                         <configuration>
                             <failOnError>true</failOnError>
                             <quiet>true</quiet>
@@ -639,18 +679,18 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>cobertura-maven-plugin</artifactId>
-                        <version>2.7</version>
+                        <version>${cobertura-maven-plugin.version}</version>
                     </plugin>
 
                     <plugin>
                         <artifactId>maven-plugin-plugin</artifactId>
-                        <version>3.3</version>
+                        <version>${maven-plugin-plugin.version}</version>
                     </plugin>
 
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-changelog-plugin</artifactId>
-                        <version>2.3</version>
+                        <version>${maven-changelog-plugin.version}</version>
                         <reportSets>
                             <reportSet>
                                 <id>dual-report</id>
@@ -698,22 +738,111 @@
         </profile>
 
         <profile>
+            <id>dep-spock</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/src/test/groovy</exists>
+                </file>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.spockframework</groupId>
+                    <artifactId>spock-core</artifactId>
+                    <version>${spock.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.codehaus.groovy</groupId>
+                    <artifactId>groovy-all</artifactId>
+                    <version>${groovy.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.objenesis</groupId>
+                    <artifactId>objenesis</artifactId>
+                    <version>${objenesis.version}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <!-- Mandatory plugins for using Spock -->
+                    <plugin>
+                        <!-- The gmavenplus plugin is used to compile Groovy code. To learn more about this plugin,
+                        visit https://github.com/groovy/GMavenPlus/wiki -->
+                        <groupId>org.codehaus.gmavenplus</groupId>
+                        <artifactId>gmavenplus-plugin</artifactId>
+                        <version>${gmavenplus-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>compile</goal>
+                                    <goal>testCompile</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.codehaus.gmaven.runtime</groupId>
+                                <artifactId>gmaven-runtime-2.0</artifactId>
+                                <version>${gmavenplus-plugin.version}</version>
+                                <exclusions>
+                                    <exclusion>
+                                        <groupId>org.codehaus.groovy</groupId>
+                                        <artifactId>groovy-all</artifactId>
+                                    </exclusion>
+                                </exclusions>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.codehaus.groovy</groupId>
+                                <artifactId>groovy-all</artifactId>
+                                <version>${groovy.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                    <!-- Optional plugins for using Spock -->
+                    <!-- Only required if names of spec classes don't match default Surefire patterns (`*Test` etc.) -->
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <useFile>true</useFile>
+                            <skipTests>false</skipTests>
+                            <includes>
+                                <!-- By default only files ending in 'Test' will be included, so also include support for Spock style naming convention -->
+                                <!-- Oddly enough for Groovy files, *Spec.groovy does not work, but *Spec.java does -->
+                                <include>**/*Test.java</include>
+                                <include>**/*Spec.java</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
             <id>dep-log4j</id>
             <activation>
                 <file>
-                    <exists>${basedir}/src/test/resources/log4j.properties</exists>
+                    <exists>${basedir}/src/test/resources/log4j2.xml</exists>
                 </file>
             </activation>
             <dependencies>
                 <dependency>
                     <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                    <scope>test</scope>
+                    <artifactId>slf4j-api</artifactId>
+                    <version>${slf4j.version}</version>
                 </dependency>
                 <dependency>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                    <scope>test</scope>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-slf4j-impl</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-api</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-core</artifactId>
                 </dependency>
             </dependencies>
         </profile>
@@ -768,7 +897,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>sonar-maven-plugin</artifactId>
-                        <version>2.6</version>
+                        <version>${sonar-maven-plugin.version}</version>
                     </plugin>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
@@ -836,7 +965,7 @@
                         <!-- @see http://www.sonatype.com/books/nexus-book/reference/staging-sect-deployment.html -->
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.6</version>
+                        <version>${nexus-staging-maven-plugin.version}</version>
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>oss.sonatype.org</serverId>
@@ -891,9 +1020,18 @@
                 <version>${logback.version}</version>
             </dependency>
             <dependency>
-                <!-- Use LOG4J logging facility for all loggings. -->
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-slf4j-impl</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
                 <version>${log4j.version}</version>
             </dependency>
 
@@ -932,6 +1070,25 @@
                 <scope>test</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.spockframework</groupId>
+                <artifactId>spock-core</artifactId>
+                <version>${spock.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>${groovy.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.objenesis</groupId>
+                <artifactId>objenesis</artifactId>
+                <version>${objenesis.version}</version>
+                <scope>test</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -942,20 +1099,20 @@
 
                 <plugin>
                     <artifactId>maven-help-plugin</artifactId>
-                    <version>2.2</version>
+                    <version>${maven-help-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-dependency-plugin</artifactId>
-                    <version>2.10</version>
+                    <version>${maven-dependency-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>2.6.1</version>
+                    <version>${maven-clean-plugin.version}</version>
                 </plugin>
 
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
-                    <version>2.7</version>
+                    <version>${maven-resources-plugin.version}</version>
                     <configuration>
                         <encoding>${project.source.encoding}</encoding>
                     </configuration>
@@ -971,7 +1128,7 @@
 
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.3</version>
+                    <version>${maven-compiler-plugin.version}</version>
                     <configuration>
                         <source>${project.source.compile}</source>
                         <target>${project.target.compile}</target>
@@ -999,7 +1156,7 @@
 
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.19</version>
+                    <version>${maven-surefire-plugin.version}</version>
                     <configuration>
                         <useFile>false</useFile>
                         <runOrder>random</runOrder>
@@ -1016,7 +1173,7 @@
 
                 <plugin>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>2.19</version>
+                    <version>${maven-failsafe-plugin.version}</version>
                     <configuration>
                         <encoding>${project.build.sourceEncoding}</encoding>
                         <failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
@@ -1032,30 +1189,30 @@
 
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>2.6</version>
+                    <version>${maven-jar-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-war-plugin</artifactId>
-                    <version>2.6</version>
+                    <version>${maven-war-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.6</version>
+                    <version>${maven-assembly-plugin.version}</version>
                 </plugin>
 
                 <plugin>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>2.4</version>
+                    <version>${maven-source-plugin.version}</version>
                 </plugin>
 
                 <plugin>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.10.3</version>
+                    <version>${maven-javadoc-plugin.version}</version>
                 </plugin>
 
                 <plugin>
                     <artifactId>maven-install-plugin</artifactId>
-                    <version>2.5.2</version>
+                    <version>${maven-install-plugin.version}</version>
                     <configuration>
                         <createChecksum>true</createChecksum>
                     </configuration>
@@ -1064,7 +1221,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
-                    <version>2.2</version>
+                    <version>${versions-maven-plugin.version}</version>
                     <!-- keep it at 2.1, see #42 -->
                     <configuration>
                         <generateBackupPoms>false</generateBackupPoms>
@@ -1073,24 +1230,24 @@
 
                 <plugin>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.4</version>
+                    <version>${maven-site-plugin.version}</version>
                     <dependencies>
                         <dependency>
                             <groupId>org.apache.maven.doxia</groupId>
                             <artifactId>doxia-module-markdown</artifactId>
-                            <version>1.6</version>
+                            <version>${doxia-module-markdown.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
 
                 <plugin>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>2.8.1</version>
+                    <version>${maven-project-info-reports-plugin.version}</version>
                 </plugin>
 
                 <plugin>
                     <artifactId>maven-release-plugin</artifactId>
-                    <version>2.5.3</version>
+                    <version>${maven-release-plugin.version}</version>
                     <configuration>
                         <tagBase>https://svn.apache.org/repos/asf/continuum/tags</tagBase>
                         <preparationGoals>clean install</preparationGoals>
@@ -1100,7 +1257,7 @@
 
                 <plugin>
                     <artifactId>maven-deploy-plugin</artifactId>
-                    <version>2.8.2</version>
+                    <version>${maven-deploy-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>default-deploy</id>
@@ -1114,25 +1271,25 @@
 
                 <plugin>
                     <artifactId>maven-antrun-plugin</artifactId>
-                    <version>1.8</version>
+                    <version>${maven-antrun-plugin.version}</version>
                 </plugin>
 
                 <plugin>
                     <groupId>io.takari.maven.plugins</groupId>
                     <artifactId>takari-lifecycle-plugin</artifactId>
                     <extensions>true</extensions>
-                    <version>1.11.11</version>
+                    <version>${takari-lifecycle-plugin.version}</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>appassembler-maven-plugin</artifactId>
-                    <version>1.10</version>
+                    <version>${appassembler-maven-plugin.version}</version>
                 </plugin>
 
                 <plugin>
                     <artifactId>maven-invoker-plugin</artifactId>
-                    <version>2.0</version>
+                    <version>${maven-invoker-plugin.version}</version>
                     <configuration>
                         <mergeUserSettings>true</mergeUserSettings>
                         <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
@@ -1152,7 +1309,7 @@
                 <plugin>
                     <groupId>com.github.github</groupId>
                     <artifactId>site-maven-plugin</artifactId>
-                    <version>0.12</version>
+                    <version>${site-maven-plugin.version}</version>
                 </plugin>
 
                 <plugin>
@@ -1167,17 +1324,17 @@
                 <plugin>
                     <groupId>org.basepom.maven</groupId>
                     <artifactId>duplicate-finder-maven-plugin</artifactId>
-                    <version>1.2.1</version>
+                    <version>${duplicate-finder-maven-plugin.version}</version>
                 </plugin>
 
                 <plugin>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>2.17</version>
+                    <version>${maven-checkstyle-plugin.version}</version>
                 </plugin>
 
                 <plugin>
                     <artifactId>maven-pmd-plugin</artifactId>
-                    <version>3.5</version>
+                    <version>${maven-pmd-plugin.version}</version>
                 </plugin>
 
                 <plugin>
@@ -1188,13 +1345,13 @@
 
                 <plugin>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>1.4.1</version>
+                    <version>${maven-enforcer-plugin.version}</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.pitest</groupId>
                     <artifactId>pitest-maven</artifactId>
-                    <version>1.1.7</version>
+                    <version>${pitest-maven.version}</version>
                 </plugin>
 
             </plugins>
@@ -1255,8 +1412,7 @@
                     <dependency>
                         <groupId>org.apache.maven.scm</groupId>
                         <artifactId>maven-scm-provider-gitexe</artifactId>
-                        <!-- This version is necessary for use with git version 1.8.5 -->
-                        <version>1.8.1</version>
+                        <version>${maven-scm-provider-gitexe.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
