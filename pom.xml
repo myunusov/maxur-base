@@ -6,7 +6,7 @@
 
     <groupId>org.maxur</groupId>
     <artifactId>maxur-base</artifactId>
-    <version>0.10</version>
+    <version>0.11-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <inceptionYear>2015</inceptionYear>
@@ -41,13 +41,12 @@
         <site.path>${basedir}/src/site</site.path>
         <site.skip>true</site.skip>
 
-
         <config.version>1.3.0</config.version>
-        <guava.version>18.0</guava.version>
+        <guava.version>19.0</guava.version>
         <objenesis.version>2.2</objenesis.version>
 
         <logback.version>1.1.3</logback.version>
-        <log4j.version>2.4.1</log4j.version>
+        <log4j.version>2.5</log4j.version>
         <slf4j.version>1.7.13</slf4j.version>
 
         <assertj-core.version>3.2.0</assertj-core.version>
@@ -56,13 +55,13 @@
         <jmockit.version>1.20</jmockit.version>
 
         <groovy.version>2.4.5</groovy.version>
-        <checkstyle.version>6.12.1</checkstyle.version>
+        <checkstyle.version>6.13</checkstyle.version>
         <reflow-velocity-tools.version>1.1.1</reflow-velocity-tools.version>
         <velocity.version>1.7</velocity.version>
         <wagon-git.version>2.0.4</wagon-git.version>
 
         <maven-clover2-plugin.version>4.0.6</maven-clover2-plugin.version>
-        <qulice-maven-plugin.version>0.13.2</qulice-maven-plugin.version>
+        <qulice-maven-plugin.version>0.13.3</qulice-maven-plugin.version>
         <findbugs-maven-plugin.version>3.0.3</findbugs-maven-plugin.version>
         <maven-filtering.version>3.0.0</maven-filtering.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
