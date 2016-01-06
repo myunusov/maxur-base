@@ -22,7 +22,7 @@ All that you need to do is to define our artifact as a parent of your project:
   <parent>
     <groupId>org.maxur</groupId>
     <artifactId>maxur-base</artifactId>
-    <version>0.10</version>
+    <version>0.12</version>
   </parent>
   <groupId>your-group-id</groupId>
   <artifactId>your-artifact-id</artifactId>
@@ -182,7 +182,7 @@ Enable [LOG4J2] (https://logging.apache.org/log4j/2.x/) for logging and [SLF4J] 
             
 ###dep-logback
 
-Enable [logback] (http://logback.qos.ch/) for logging and [SLF4J] (http://www.slf4j.org/) binding. The profile is activated when you have **src/test/resources/logback.xml**.
+Enable [logback] (http://logback.qos.ch/) for logging and [SLF4J] (http://www.slf4j.org/) binding. The profile is activated when you have **src/test/resources/logback-test.xml**.
 
 ## Links  
 

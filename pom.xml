@@ -6,7 +6,7 @@
 
     <groupId>org.maxur</groupId>
     <artifactId>maxur-base</artifactId>
-    <version>0.11-SNAPSHOT</version>
+    <version>0.12-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <inceptionYear>2015</inceptionYear>
@@ -61,7 +61,7 @@
         <wagon-git.version>2.0.4</wagon-git.version>
 
         <maven-clover2-plugin.version>4.0.6</maven-clover2-plugin.version>
-        <qulice-maven-plugin.version>0.13.3</qulice-maven-plugin.version>
+        <qulice-maven-plugin.version>0.14</qulice-maven-plugin.version>
         <findbugs-maven-plugin.version>3.0.3</findbugs-maven-plugin.version>
         <maven-filtering.version>3.0.0</maven-filtering.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
@@ -89,11 +89,11 @@
         <maven-assembly-plugin.version>2.6</maven-assembly-plugin.version>
         <maven-source-plugin.version>2.4</maven-source-plugin.version>
         <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
-        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+        <maven-release-plugin.version>3.0-r1585899</maven-release-plugin.version>
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
         <maven-invoker-plugin.version>2.0</maven-invoker-plugin.version>
         <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
-        <maven-pmd-plugin.version>3.5</maven-pmd-plugin.version>
+        <maven-pmd-plugin.version>3.6</maven-pmd-plugin.version>
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
 
         <nexus-staging-maven-plugin.version>1.6.6</nexus-staging-maven-plugin.version>
@@ -850,7 +850,7 @@
             <id>dep-logback</id>
             <activation>
                 <file>
-                    <exists>${basedir}/src/test/resources/logback.xml</exists>
+                    <exists>${basedir}/src/test/resources/logback-test.xml</exists>
                 </file>
             </activation>
             <dependencies>
