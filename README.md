@@ -22,7 +22,7 @@ All that you need to do is to define our artifact as a parent of your project:
   <parent>
     <groupId>org.maxur</groupId>
     <artifactId>maxur-base</artifactId>
-    <version>0.13</version>
+    <version>0.14</version>
   </parent>
   <groupId>your-group-id</groupId>
   <artifactId>your-artifact-id</artifactId>
@@ -167,6 +167,15 @@ It also skips default deployment plugin.
  - [dep-logback](#dep-logback)
  
 
+###dep-spock
+
+Enable unit testing. The profile is activated when you have **src/test/groovy directory** in the project.
+These artifacts are automatically added to the list of dependencies (in test scope):
+
+ * [org.spockframework:spock-core] (https://github.com/spockframework/spock): unit testing framework
+ * [org.codehaus.groovy:groovy-all] (https://github.com/apache/groovy): Apache Groovy 
+ * [org.objenesis:objenesis] (http://objenesis.org/): To instantiate a new object of a particular class 
+ 
 ###dep-junit
             
 Enable unit testing. The profile is activated when you have **src/test/java directory** in the project.
