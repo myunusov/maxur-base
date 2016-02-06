@@ -175,6 +175,8 @@ These artifacts are automatically added to the list of dependencies (in test sco
  * [org.spockframework:spock-core] (https://github.com/spockframework/spock): unit testing framework
  * [org.codehaus.groovy:groovy-all] (https://github.com/apache/groovy): Apache Groovy 
  * [org.objenesis:objenesis] (http://objenesis.org/): To instantiate a new object of a particular class 
+ * [cglib:cglib] (https://github.com/cglib/cglib): Byte Code Generation Library is high level API to generate and transform Java byte code 
+ * [org.hamcrest:hamcrest-all] (http://hamcrest.org/JavaHamcrest/): Matchers that can be combined to create flexible expressions of intent 
  
 ###dep-junit
             
