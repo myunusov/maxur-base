@@ -1,3 +1,6 @@
+/pubring.gpg
+/secring.gpg
+/settings.xml
 *.iml
 
 logs
