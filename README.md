@@ -22,7 +22,7 @@ All that you need to do is to define our artifact as a parent of your project:
   <parent>
     <groupId>org.maxur</groupId>
     <artifactId>maxur-base</artifactId>
-    <version>0.14</version>
+    <version>0.15</version>
   </parent>
   <groupId>your-group-id</groupId>
   <artifactId>your-artifact-id</artifactId>
@@ -175,6 +175,8 @@ These artifacts are automatically added to the list of dependencies (in test sco
  * [org.spockframework:spock-core] (https://github.com/spockframework/spock): unit testing framework
  * [org.codehaus.groovy:groovy-all] (https://github.com/apache/groovy): Apache Groovy 
  * [org.objenesis:objenesis] (http://objenesis.org/): To instantiate a new object of a particular class 
+ * [cglib:cglib] (https://github.com/cglib/cglib): Byte Code Generation Library is high level API to generate and transform Java byte code 
+ * [org.hamcrest:hamcrest-all] (http://hamcrest.org/JavaHamcrest/): Matchers that can be combined to create flexible expressions of intent 
  
 ###dep-junit
             
