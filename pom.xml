@@ -1169,42 +1169,11 @@
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
-                    <configuration>
-                        <useFile>false</useFile>
-                        <runOrder>random</runOrder>
-                        <trimStackTrace>false</trimStackTrace>
-                        <failIfNoTests>false</failIfNoTests>
-                        <failIfNoSpecifiedTests>true</failIfNoSpecifiedTests>
-                        <parallel>all</parallel>
-                        <parallelTestsTimeoutInSeconds>0</parallelTestsTimeoutInSeconds>
-                        <parallelTestsTimeoutForcedInSeconds>0</parallelTestsTimeoutForcedInSeconds>
-                        <perCoreThreadCount>true</perCoreThreadCount>
-                        <threadCount>4</threadCount>
-                    </configuration>
                 </plugin>
 
                 <plugin>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${maven-failsafe-plugin.version}</version>
-                    <configuration>
-                        <encoding>${project.build.sourceEncoding}</encoding>
-                        <failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
-                        <forkCount>0</forkCount>
-                        <parallel>all</parallel>
-                        <parallelTestsTimeoutForcedInSeconds>0</parallelTestsTimeoutForcedInSeconds>
-                        <parallelTestsTimeoutInSeconds>0</parallelTestsTimeoutInSeconds>
-                        <perCoreThreadCount>true</perCoreThreadCount>
-                        <runOrder>random</runOrder>
-                        <threadCount>8</threadCount>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>integration-test</goal>
-                                <goal>verify</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
 
                 <plugin>
