@@ -7,9 +7,13 @@ decrypt:
   pubring.gpg: "repo/pubring.gpg.asc"
   secring.gpg: "repo/secring.gpg.asc"
 
-site:
+merge:
   script: |
-  mvn site com.github.github:site-maven-plugin:site --settings /home/r/settings.xml -Denv=prod -Psite,self-doc,debug
+    mvn clean install
+deploy:
+  script: |
+    mvn clean install
+    mvn site com.github.github:site-maven-plugin:site --settings /home/r/settings.xml -Denv=prod -Psite,self-doc,debug
 release:
   script: |
     mvn versions:set "-DnewVersion=${tag}" -Denv=prod
