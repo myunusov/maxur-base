@@ -43,6 +43,7 @@ snapshot.allowed.artifacts | List of dependency patterns to exclude when checkin
 ##Profiles
 
  - [announcement](#announcement)
+ - [jacoco](#jacoco)
  - [clover](#clover)
  - [gh-pages](#gh-pages)
  - [gpg](#gpg)
@@ -175,6 +176,7 @@ It also skips default deployment plugin.
             
 ##Implicit Profiles
 
+ - [dep-spock](#dep-spock)
  - [dep-junit](#dep-junit)
  - [dep-log4j](#dep-log4j)
  - [dep-logback](#dep-logback)
