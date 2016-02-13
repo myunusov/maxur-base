@@ -1,3 +1,6 @@
+/pubring.gpg
+/secring.gpg
+/settings.xml
 *.iml
 
 logs
@@ -7,6 +10,9 @@ node_modules
 _*
 
 target/
+/pubring.gpg
+/secring.gpg
+/settings.xml
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup

@@ -1,11 +1,19 @@
 architect:
   - myunusov
 docker:
-  image: "teamed/docker-java-8"
+  image: "maxur/maxur-dev"
 decrypt:
   settings.xml: "repo/settings.xml.asc"
   pubring.gpg: "repo/pubring.gpg.asc"
   secring.gpg: "repo/secring.gpg.asc"
+
+merge:
+  script: |
+    mvn clean install
+deploy:
+  script: |
+    mvn clean install
+    mvn site com.github.github:site-maven-plugin:site --settings /home/r/settings.xml -Denv=prod -Psite,self-doc,debug
 release:
   script: |
     mvn versions:set "-DnewVersion=${tag}" -Denv=prod
