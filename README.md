@@ -62,11 +62,24 @@ $ mvn clean install -Denv=prod
 
 Generate an announcement from the announcement template
 
+
+###jacoco
+
+This profile can be activated manually:
+
+It configures [jacoco-maven-plugin] (http://eclemma.org/jacoco/trunk/doc/maven.html) for check and report tests coverage.
+
+Name | Description | Value | Default Value
+------------ | ------------- | ------------- | -------------
+unit.tests.coverage.output.directory | The path to unit tests coverage report  | path | ${project.reporting.outputDirectory}/jacoco-ut
+integration.tests.coverage.output.directory  | The path to integration tests coverage report | path | ${project.reporting.outputDirectory}/jacoco-it
+
 ###clover
 
 The profile is activated automatically when you have a **clover.license** file in a root directory.
 
-It configures [maven-clover2-plugin] (https://docs.atlassian.com/maven-clover2-plugin/2.3.1/) for check and report tasks.
+It configures [maven-clover2-plugin] (https://docs.atlassian.com/maven-clover2-plugin) for check and report tests coverage.
+
 
 ###gh-pages
             
