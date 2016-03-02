@@ -49,6 +49,7 @@
             ${project.reporting.outputDirectory}/jacoco-it
         </integration.tests.coverage.output.directory>
 
+        <annotations.version>15.0</annotations.version>
         <config.version>1.3.0</config.version>
         <guava.version>19.0</guava.version>
         <objenesis.version>2.2</objenesis.version>
@@ -1090,6 +1091,13 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- DbC -->
+            <dependency>
+                <groupId>org.jetbrains</groupId>
+                <artifactId>annotations</artifactId>
+                <version>${annotations.version}</version>
+            </dependency>
 
             <!-- Logging -->
             <dependency>
