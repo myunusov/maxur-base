@@ -187,10 +187,6 @@
     <profiles>
         <profile>
             <id>self-doc</id>
-            <properties>
-                <site.path>${basedir}/src/site</site.path>
-                <site.skip>false</site.skip>
-            </properties>
 
             <distributionManagement>
                 <site>
@@ -199,29 +195,6 @@
                     <url>git:ssh://git@github.com/myunusov/maxur-base.git?gh-pages#</url>
                 </site>
             </distributionManagement>
-
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>pre-site</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                                <configuration>
-                                    <target>
-                                        <echo>Copy README.md to site/index.md</echo>
-                                        <copy file="${project.root}/README.md" tofile="${project.root}/target//generated-site/markdown/index.md"/>
-                                    </target>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
 
             <reporting>
                 <plugins>
@@ -485,8 +458,30 @@
 
         <profile>
             <id>site</id>
+            <properties>
+                <site.path>${basedir}/src/site</site.path>
+                <site.skip>false</site.skip>
+            </properties>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>pre-site</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <echo>Copy README.md to site/index.md</echo>
+                                        <copy file="${project.root}/README.md" tofile="${project.root}/target//generated-site/markdown/index.md"/>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <artifactId>maven-site-plugin</artifactId>
                         <version>${maven-site-plugin.version}</version>
@@ -703,7 +698,7 @@
                             <reportSet>
                                 <id>dual-report</id>
                                 <configuration>
-                                    <type>range</type>      git
+                                    <type>range</type>
                                     <range>30</range>
                                 </configuration>
                                 <reports>
