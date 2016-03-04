@@ -274,7 +274,7 @@
                                     <templateDirectory>template</templateDirectory>
                                     <announcementFile>release-notes.md</announcementFile>
                                     <announcementDirectory>
-                                        ${project.root}/target//generated-site/markdown
+                                        ${project.root}/target/generated-site/markdown
                                     </announcementDirectory>
                                 </configuration>
                             </execution>
@@ -476,7 +476,10 @@
                                 <configuration>
                                     <target>
                                         <echo>Copy README.md to site/index.md</echo>
-                                        <copy file="${project.root}/README.md" tofile="${project.root}/target//generated-site/markdown/index.md"/>
+                                        <copy
+                                                file="${basedir}/README.md"
+                                                tofile="${basedir}/target/generated-site/markdown/index.md"
+                                        />
                                     </target>
                                 </configuration>
                             </execution>
