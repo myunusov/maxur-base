@@ -187,10 +187,6 @@
     <profiles>
         <profile>
             <id>self-doc</id>
-            <properties>
-                <site.path>${basedir}/src/site</site.path>
-                <site.skip>false</site.skip>
-            </properties>
 
             <distributionManagement>
                 <site>
@@ -462,6 +458,10 @@
 
         <profile>
             <id>site</id>
+            <properties>
+                <site.path>${basedir}/src/site</site.path>
+                <site.skip>false</site.skip>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -698,7 +698,7 @@
                             <reportSet>
                                 <id>dual-report</id>
                                 <configuration>
-                                    <type>range</type>      git
+                                    <type>range</type>
                                     <range>30</range>
                                 </configuration>
                                 <reports>
