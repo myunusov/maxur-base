@@ -6,7 +6,7 @@
 
     <groupId>org.maxur</groupId>
     <artifactId>maxur-base</artifactId>
-    <version>0.16-SNAPSHOT</version>
+    <version>0.17-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <inceptionYear>2015</inceptionYear>
@@ -214,7 +214,7 @@
                                 <configuration>
                                     <target>
                                         <echo>Copy README.md to site/index.md</echo>
-                                        <copy file="${basedir}/README.md" tofile="${site.path}/markdown/index.md"/>
+                                        <copy file="${project.root}/README.md" tofile="${project.root}/target//generated-site/markdown/index.md"/>
                                     </target>
                                 </configuration>
                             </execution>
