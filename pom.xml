@@ -495,14 +495,10 @@
                                 <configuration>
                                     <target>
                                         <echo>Copy README.md to site/index.md</echo>
-<<<<<<< HEAD
                                         <copy
                                                 file="${basedir}/README.md"
                                                 tofile="${basedir}/target/generated-site/markdown/index.md"
                                         />
-=======
-                                        <copy file="${project.root}/README.md" tofile="${project.root}/target//generated-site/markdown/index.md"/>
->>>>>>> master
                                     </target>
                                 </configuration>
                             </execution>
