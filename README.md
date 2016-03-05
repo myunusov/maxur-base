@@ -43,15 +43,16 @@ snapshot.allowed.artifacts | List of dependency patterns to exclude when checkin
 
 ##Profiles
 
- - [announcement](#announcement)
- - [jacoco](#jacoco)
+ - [announcement](#announcement) 
  - [clover](#clover)
  - [gh-pages](#gh-pages)
  - [gpg](#gpg)
  - [inspect](#inspect)
+ - [jacoco](#jacoco)
  - [site](#site)
  - [sonar](#sonar)
  - [sonatype](#sonatype)
+ - [versioneye](#versioneye)
  
 
 ###announcement
@@ -64,17 +65,6 @@ $ mvn clean install -Denv=prod
 
 Generate an announcement from the announcement template
 
-
-###jacoco
-
-This profile can be activated manually:
-
-It configures [jacoco-maven-plugin] (http://eclemma.org/jacoco/trunk/doc/maven.html) for check and report tests coverage.
-
-Name | Description | Value | Default Value
------------- | ------------- | ------------- | -------------
-unit.tests.coverage.output.directory | The path to unit tests coverage report  | path | ${project.reporting.outputDirectory}/jacoco-ut
-integration.tests.coverage.output.directory  | The path to integration tests coverage report | path | ${project.reporting.outputDirectory}/jacoco-it
 
 ###clover
 
@@ -143,6 +133,17 @@ It is expected by default that your **LICENSE.txt** is located in a root directo
 All plugins are bound to the *verify* Maven phase. 
 All executions are named *maxur-check*.
 
+###jacoco
+
+This profile can be activated manually:
+
+It configures [jacoco-maven-plugin] (http://eclemma.org/jacoco/trunk/doc/maven.html) for check and report tests coverage.
+
+Name | Description | Value | Default Value
+------------ | ------------- | ------------- | -------------
+unit.tests.coverage.output.directory | The path to unit tests coverage report  | path | ${project.reporting.outputDirectory}/jacoco-ut
+integration.tests.coverage.output.directory  | The path to integration tests coverage report | path | ${project.reporting.outputDirectory}/jacoco-it
+
 ###site
 
 The profile builds site for production environment.           
@@ -174,18 +175,32 @@ It configures [sonar-maven-plugin] (http://docs.sonarqube.org/display/SONAR/Anal
             
 The profile deploys all artifacts to oss.sonatype.org repository .
 It also skips default deployment plugin.
-            
+           
+### versioneye          
+
+The maven plugin for VersionEye helps you to create/update a project at VersionEye, which is a Notification System for Software Libraries. It will help you to keep your projects up-to-date and automatically notify you about outdated dependencies and license violations. You can check it out here: www.versioneye.com.
+
+The profile is activated when you have **src/qa/resources/versioneye.properties** file in the project.
+ 
+*versioneye.properties*
+
+```properties
+api_key = YOUR_SECRET_API_KEY
+project_id = YOUR_VERSONEYE_PROJECT_ID
+```
+
+see [versioneye_maven_plugin](https://github.com/versioneye/versioneye_maven_plugin) for more details
+                      
 ##Implicit Profiles
 
  - [dep-spock](#dep-spock)
  - [dep-junit](#dep-junit)
  - [dep-log4j](#dep-log4j)
- - [dep-logback](#dep-logback)
- 
+ - [dep-logback](#dep-logback) 
 
 ###dep-spock
 
-Enable unit testing. The profile is activated when you have **src/test/groovy directory** in the project.
+Enable unit testing. The profile is activated when you have **src/test/groovy** directory in the project.
 These artifacts are automatically added to the list of dependencies (in test scope):
 
  * [org.spockframework:spock-core] (https://github.com/spockframework/spock): unit testing framework
@@ -196,7 +211,7 @@ These artifacts are automatically added to the list of dependencies (in test sco
  
 ###dep-junit
             
-Enable unit testing. The profile is activated when you have **src/test/java directory** in the project.
+Enable unit testing. The profile is activated when you have **src/test/java** directory in the project.
 These artifacts are automatically added to the list of dependencies (in test scope, of course):
 
  * [junit:junit] (http://junit.org/): unit testing framework

@@ -99,6 +99,7 @@
         <maven-pmd-plugin.version>3.6</maven-pmd-plugin.version>
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
 
+        <versioneye-maven-plugin.version>3.9.1</versioneye-maven-plugin.version>
         <maven-clover2-plugin.version>4.0.6</maven-clover2-plugin.version>
         <jacoco-maven-plugin.version>0.7.6.201602180812</jacoco-maven-plugin.version>
         <qulice-maven-plugin.version>0.16.3</qulice-maven-plugin.version>
@@ -208,6 +209,24 @@
                     </plugin>
                 </plugins>
             </reporting>
+        </profile>
+
+        <profile>
+            <id>versioneye</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/src/qa/resources/versioneye.properties</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.versioneye</groupId>
+                        <artifactId>versioneye-maven-plugin</artifactId>
+                        <version>${versioneye-maven-plugin.version}</version>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
 
         <profile>
@@ -1473,7 +1492,6 @@
 
         <plugins>
             <plugin>
-
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <executions>
                     <execution>

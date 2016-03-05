@@ -15,6 +15,7 @@ target/
 /settings.xml
 pom.xml.tag
 pom.xml.releaseBackup
+versioneye.properties
 pom.xml.versionsBackup
 pom.xml.next
 release.properties
