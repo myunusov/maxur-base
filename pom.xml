@@ -64,7 +64,7 @@
         <jmockit.version>1.22</jmockit.version>
 
         <groovy.version>2.4.6</groovy.version>
-        <checkstyle.version>6.15</checkstyle.version>
+        <checkstyle.version>6.16.1</checkstyle.version>
         <velocity.version>1.7</velocity.version>
         <wagon-git.version>2.0.4</wagon-git.version>
 
@@ -100,7 +100,7 @@
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
 
         <maven-clover2-plugin.version>4.0.6</maven-clover2-plugin.version>
-        <jacoco-maven-plugin.version>0.7.5.201505241946</jacoco-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.7.6.201602180812</jacoco-maven-plugin.version>
         <qulice-maven-plugin.version>0.16.3</qulice-maven-plugin.version>
         <findbugs-maven-plugin.version>3.0.3</findbugs-maven-plugin.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
@@ -235,9 +235,9 @@
                                     <goal>run</goal>
                                 </goals>
                                 <configuration>
-                                    <tasks>
+                                    <target>
                                         <echoproperties/>
-                                    </tasks>
+                                    </target>
                                 </configuration>
                             </execution>
                         </executions>
