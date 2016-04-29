@@ -22,7 +22,7 @@ All that you need to do is to define our artifact as a parent of your project:
   <parent>
     <groupId>org.maxur</groupId>
     <artifactId>maxur-base</artifactId>
-    <version>0.17</version>
+    <version>0.18</version>
   </parent>
   <groupId>your-group-id</groupId>
   <artifactId>your-artifact-id</artifactId>

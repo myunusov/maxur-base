@@ -6,7 +6,7 @@
 
     <groupId>org.maxur</groupId>
     <artifactId>maxur-base</artifactId>
-    <version>0.17-SNAPSHOT</version>
+    <version>0.18-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <inceptionYear>2015</inceptionYear>
@@ -54,29 +54,31 @@
         <guava.version>19.0</guava.version>
         <objenesis.version>2.2</objenesis.version>
 
-        <logback.version>1.1.6</logback.version>
+        <logback.version>1.1.7</logback.version>
         <log4j.version>2.5</log4j.version>
-        <slf4j.version>1.7.18</slf4j.version>
+        <slf4j.version>1.7.21</slf4j.version>
 
-        <assertj-core.version>3.3.0</assertj-core.version>
+        <assertj-core.version>3.4.1</assertj-core.version>
         <junit.version>4.12</junit.version>
         <spock.version>1.0-groovy-2.4</spock.version>
-        <jmockit.version>1.22</jmockit.version>
+        <jmockit.version>1.23</jmockit.version>
+        <cglib.version>3.2.2</cglib.version>
+        <hamcrest.version>1.3</hamcrest.version>
 
         <groovy.version>2.4.6</groovy.version>
-        <checkstyle.version>6.16.1</checkstyle.version>
+        <checkstyle.version>6.17</checkstyle.version>
         <velocity.version>1.7</velocity.version>
         <wagon-git.version>2.0.4</wagon-git.version>
 
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>2.19.1</maven-failsafe-plugin.version>
         <maven-surefire-report-plugin.version>2.19.1</maven-surefire-report-plugin.version>
-        <maven-filtering.version>3.0.0</maven-filtering.version>
-        <maven-changes-plugin.version>2.11</maven-changes-plugin.version>
+        <maven-filtering.version>3.1.0</maven-filtering.version>
+        <maven-changes-plugin.version>2.12</maven-changes-plugin.version>
         <maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <maven-site-plugin.version>3.5</maven-site-plugin.version>
-        <maven-project-info-reports-plugin.version>2.8.1</maven-project-info-reports-plugin.version>
+        <maven-site-plugin.version>3.5.1</maven-site-plugin.version>
+        <maven-project-info-reports-plugin.version>2.9</maven-project-info-reports-plugin.version>
         <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
         <maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
         <maven-plugin-plugin.version>3.4</maven-plugin-plugin.version>
@@ -102,10 +104,10 @@
         <versioneye-maven-plugin.version>3.9.1</versioneye-maven-plugin.version>
         <maven-clover2-plugin.version>4.0.6</maven-clover2-plugin.version>
         <jacoco-maven-plugin.version>0.7.6.201602180812</jacoco-maven-plugin.version>
-        <qulice-maven-plugin.version>0.16.3</qulice-maven-plugin.version>
+        <qulice-maven-plugin.version>0.16.4</qulice-maven-plugin.version>
         <findbugs-maven-plugin.version>3.0.3</findbugs-maven-plugin.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
-        <nexus-staging-maven-plugin.version>1.6.6</nexus-staging-maven-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.7</nexus-staging-maven-plugin.version>
         <versions-maven-plugin.version>2.2</versions-maven-plugin.version>
         <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
         <gmavenplus-plugin.version>1.5</gmavenplus-plugin.version>
@@ -116,8 +118,7 @@
         <site-maven-plugin.version>0.12</site-maven-plugin.version>
         <duplicate-finder-maven-plugin.version>1.2.1</duplicate-finder-maven-plugin.version>
         <pitest-maven.version>1.1.9</pitest-maven.version>
-        <cglib.version>3.2.1</cglib.version>
-        <hamcrest.version>1.3</hamcrest.version>
+
     </properties>
 
     <organization>
