@@ -13,3 +13,5 @@ install:
   - mvn clean install -Penv-dev  
 script:
   - mvn test -Penv-dev
+notifications:
+  slack: maxur:bIyYFLYJ0n1toR66dIr5OSbD
