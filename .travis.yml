@@ -10,6 +10,6 @@ env:
 jdk:
   - oraclejdk8
 script:
-  - mvn clean verify -Penv-dev
+  - mvn clean verify -Denv=dev
 notifications:
   slack: maxur:bIyYFLYJ0n1toR66dIr5OSbD
