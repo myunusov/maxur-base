@@ -9,9 +9,7 @@ env:
     - JAVA_OPTS="-XX:MaxPermSize=2g -Xmx4g"
 jdk:
   - oraclejdk8
-install:
-  - mvn clean install -Penv-dev  
 script:
-  - mvn test -Penv-dev
+  - mvn clean verify -Penv-dev
 notifications:
   slack: maxur:bIyYFLYJ0n1toR66dIr5OSbD
