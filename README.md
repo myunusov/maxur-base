@@ -9,7 +9,7 @@
 [![Issue Stats](http://issuestats.com/github/myunusov/maxur-base/badge/pr)](http://issuestats.com/github/myunusov/maxur-base)
 [![Issue Stats](http://issuestats.com/github/myunusov/maxur-base/badge/issue)](http://issuestats.com/github/myunusov/maxur-base)
 
-[![GitHub release](https://img.shields.io/github/release/org.maxur/maxur-base.svg)](https://github.com/org.maxur/maxur-base/releases)
+[![GitHub release](https://img.shields.io/github/release/myunusov/maxur-base.svg)](https://github.com/myunusov/maxur-base/releases)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.maxur/maxur-base/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.maxur/maxur-base)
 
 ## Overview
