@@ -415,11 +415,6 @@
 
         <profile>
             <id>gh-pages</id>
-            <activation>
-                <file>
-                    <exists>${site.path}/resources/CNAME</exists>
-                </file>
-            </activation>
             <build>
                 <plugins>
                     <plugin>
