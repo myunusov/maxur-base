@@ -20,9 +20,11 @@
     <properties>
         <env>dev</env>
         <project.root>.</project.root>
-        <project.jdk>1.8</project.jdk>
         <snapshot.allowed.artifacts>org.maxur:*</snapshot.allowed.artifacts>
 
+        <require.maven.version>3.0.4</require.maven.version>
+
+        <project.jdk>1.8</project.jdk>
         <project.source.compile>${project.jdk}</project.source.compile>
         <project.target.compile>${project.jdk}</project.target.compile>
 
@@ -116,7 +118,6 @@
         <site-maven-plugin.version>0.12</site-maven-plugin.version>
         <duplicate-finder-maven-plugin.version>1.2.1</duplicate-finder-maven-plugin.version>
         <pitest-maven.version>1.1.10</pitest-maven.version>
-
     </properties>
 
     <organization>
@@ -181,7 +182,7 @@
     </ciManagement>
 
     <prerequisites>
-        <maven>3.0.4</maven>
+        <maven>${require.maven.version}</maven>
     </prerequisites>
 
     <profiles>
@@ -263,6 +264,7 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
             <id>announcement</id>
             <activation>
@@ -1084,6 +1086,55 @@
             </build>
         </profile>
 
+        <profile>
+            <id>check-dep</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>enforce-property</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireProperty>
+                                            <property>env</property>
+                                            <message>
+                                                You must specify one of the following value of property: dev, qa, prod!
+                                            </message>
+                                            <regex>(dev|qa|prod)</regex>
+                                            <regexMessage>
+                                                You must specify one of the following value of property: dev, qa, prod!
+                                            </regexMessage>
+                                        </requireProperty>
+                                        <requireMavenVersion>
+                                            <version>[${require.maven.version},)</version>
+                                        </requireMavenVersion>
+                                        <requireJavaVersion>
+                                            <version>[${project.source.compile},)</version>
+                                        </requireJavaVersion>
+                                        <requireReleaseDeps>
+                                            <message>No Snapshots Allowed!</message>
+                                            <failWhenParentIsSnapshot>false</failWhenParentIsSnapshot>
+                                            <excludes>
+                                                <exclude>${snapshot.allowed.artifacts}</exclude>
+                                            </excludes>
+                                        </requireReleaseDeps>
+                                        <requireUpperBoundDeps/>
+                                        <DependencyConvergence/>
+                                    </rules>
+                                    <fail>true</fail>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
     </profiles>
 
     <dependencyManagement>
@@ -1470,49 +1521,6 @@
 
         <plugins>
             <plugin>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>enforce-property</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <requireProperty>
-                                    <property>env</property>
-                                    <message>
-                                        You must specify one of the following value of property: dev, qa, prod!
-                                    </message>
-                                    <regex>(dev|qa|prod)</regex>
-                                    <regexMessage>
-                                        You must specify one of the following value of property: dev, qa, prod!
-                                    </regexMessage>
-                                </requireProperty>
-                                <requireMavenVersion>
-                                    <version>[3.0.4,)</version>
-                                </requireMavenVersion>
-                                <requireJavaVersion>
-                                    <version>[${project.source.compile},)</version>
-                                </requireJavaVersion>
-                                <requireReleaseDeps>
-                                    <message>No Snapshots Allowed!</message>
-                                    <failWhenParentIsSnapshot>false</failWhenParentIsSnapshot>
-                                    <excludes>
-                                        <exclude>${snapshot.allowed.artifacts}</exclude>
-                                    </excludes>
-                                </requireReleaseDeps>
-                                <requireUpperBoundDeps/>
-                                <DependencyConvergence/>
-                            </rules>
-                            <fail>true</fail>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
                     <pushChanges>false</pushChanges>
@@ -1526,7 +1534,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
         </plugins>
 
     </build>
