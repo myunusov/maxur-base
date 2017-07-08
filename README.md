@@ -27,7 +27,7 @@ All that you need to do is to define our artifact as a parent of your project:
   <parent>
     <groupId>org.maxur</groupId>
     <artifactId>maxur-base</artifactId>
-    <version>0.20</version>
+    <version>1.01</version>
   </parent>
   <groupId>your-group-id</groupId>
   <artifactId>your-artifact-id</artifactId>
@@ -36,7 +36,7 @@ All that you need to do is to define our artifact as a parent of your project:
 </project>
 ```
 
-##Properties
+## Properties
 
 Name | Description | Value | Default Value  
 ------------ | ------------- | ------------- | -------------
@@ -46,7 +46,7 @@ site.path | Path to Project Site's sources | path | .
 project.jdk  | The version of JDK. | java version | 1.8
 snapshot.allowed.artifacts | List of dependency patterns to exclude when checking for snapshot versions | list of patterns | org.maxur:*
 
-##Profiles
+## Profiles
 
  - [announcement](#announcement) 
  - [clover](#clover)
@@ -60,7 +60,7 @@ snapshot.allowed.artifacts | List of dependency patterns to exclude when checkin
  - [versioneye](#versioneye)
  
 
-###announcement
+### announcement
 
 The profile is activated automatically when you have the target environment as production.
 
@@ -70,23 +70,15 @@ $ mvn clean install -Denv=prod
 
 Generate an announcement from the announcement template
 
-
-###clover
-
-The profile is activated automatically when you have a **clover.license** file in a root directory.
-
-It configures [maven-clover2-plugin] (https://docs.atlassian.com/maven-clover2-plugin) for check and report tests coverage.
-
-
-###gh-pages
-            
+### gh-pages
+                        
 This profile can be activated manually: 
 
 ```
 $ mvn clean install -Pgh-pages
 ```
 
-This plugin can deploy site without SSH key by OAuth Token.
+You can deploy site without SSH key by OAuth Token.
 
 *settings.xml*
 
@@ -100,7 +92,7 @@ This plugin can deploy site without SSH key by OAuth Token.
 It configures site deployment to github pages. See http://pages.github.com/
                     
 
-###gpg
+### gpg
 
 Sign artifacts before installation with GPG. To enable this profile you should have "gpg.keyname" property defined.
 
@@ -108,7 +100,7 @@ Sign artifacts before installation with GPG. To enable this profile you should h
 repository. GPG keys have to be provided in CI environment, and published beforehand.  
 http://www.sonatype.com/people/2010/01/how-to-generate-pgp-signatures-with-maven/
 
-###inspect
+### inspect
 
 The profile is activated automatically when you have the target environment as qa.
 This profile can be activated manually:
@@ -138,7 +130,7 @@ It is expected by default that your **LICENSE.txt** is located in a root directo
 All plugins are bound to the *verify* Maven phase. 
 All executions are named *maxur-check*.
 
-###jacoco
+### jacoco
 
 This profile can be activated manually:
 
@@ -149,11 +141,11 @@ Name | Description | Value | Default Value
 unit.tests.coverage.output.directory | The path to unit tests coverage report  | path | ${project.reporting.outputDirectory}/jacoco-ut
 integration.tests.coverage.output.directory  | The path to integration tests coverage report | path | ${project.reporting.outputDirectory}/jacoco-it
 
-###site
+### site
 
 The profile builds site for production environment.           
 
-###sonar
+### sonar
 
 The profile is activated automatically when you have a **sonar.properties** file in a root directory.
 
@@ -176,7 +168,7 @@ sonar.artifact.path=
 
 It configures [sonar-maven-plugin] (http://docs.sonarqube.org/display/SONAR/Analyzing+with+Maven).
 
-###sonatype
+### sonatype
             
 The profile deploys all artifacts to oss.sonatype.org repository .
 It also skips default deployment plugin.
@@ -196,14 +188,14 @@ project_id = YOUR_VERSONEYE_PROJECT_ID
 
 see [versioneye_maven_plugin](https://github.com/versioneye/versioneye_maven_plugin) for more details
                       
-##Implicit Profiles
+## Implicit Profiles
 
  - [dep-spock](#dep-spock)
  - [dep-junit](#dep-junit)
  - [dep-log4j](#dep-log4j)
  - [dep-logback](#dep-logback) 
 
-###dep-spock
+### dep-spock
 
 Enable unit testing. The profile is activated when you have **src/test/groovy** directory in the project.
 These artifacts are automatically added to the list of dependencies (in test scope):
@@ -214,7 +206,7 @@ These artifacts are automatically added to the list of dependencies (in test sco
  * [cglib:cglib] (https://github.com/cglib/cglib): Byte Code Generation Library is high level API to generate and transform Java byte code 
  * [org.hamcrest:hamcrest-all] (http://hamcrest.org/JavaHamcrest/): Matchers that can be combined to create flexible expressions of intent 
  
-###dep-junit
+### dep-junit
             
 Enable unit testing. The profile is activated when you have **src/test/java** directory in the project.
 These artifacts are automatically added to the list of dependencies (in test scope, of course):
@@ -223,11 +215,11 @@ These artifacts are automatically added to the list of dependencies (in test sco
  * [org.assertj:assertj-core] (http://joel-costigliola.github.io/assertj/): assertion framework
  * [org.jmockit:jmockit] (http://jmockit.org/): mocking framework
             
-###dep-log4j 
+### dep-log4j 
           
 Enable [LOG4J2] (https://logging.apache.org/log4j/2.x/) for logging and [SLF4J] (http://www.slf4j.org/) binding. The profile is activated when you have **src/test/resources/log4j2.xml**.
             
-###dep-logback
+### dep-logback
 
 Enable [logback] (http://logback.qos.ch/) for logging and [SLF4J] (http://www.slf4j.org/) binding. The profile is activated when you have **src/test/resources/logback-test.xml**.
 
