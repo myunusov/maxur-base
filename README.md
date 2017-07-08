@@ -116,16 +116,8 @@ These plugins are used at the moment to control quality and prevent errors
 [maven-duplicate-finder-plugin] (https://github.com/basepom/duplicate-finder-maven-plugin) is a filter of duplicate classes and resources in classpath. 
 It helps to identify dependencies that are not used, or the ones that are used but not defined.
 
-
-[qulice-maven-plugin] (http://www.qulice.com/qulice-maven-plugin/) is a compound static analysis tools that aggregates
- 
-  * Checkstyle 
-  * PMD 
-  * FindBugs 
-  * CodeNarc (for Groovy code) 
-  * a few other plugins in one bucket. 
-  
-It is expected by default that your **LICENSE.txt** is located in a root directory of every module.
+[maven-checkstyle-plugin] (https://maven.apache.org/plugins/maven-checkstyle-plugin) generates a report regarding the code style used by the developers. 
+For more information about Checkstyle, see http://checkstyle.sourceforge.net/
 
 All plugins are bound to the *verify* Maven phase. 
 All executions are named *maxur-check*.
@@ -190,10 +182,17 @@ see [versioneye_maven_plugin](https://github.com/versioneye/versioneye_maven_plu
                       
 ## Implicit Profiles
 
+ - [check-dep](#check-dep)
  - [dep-spock](#dep-spock)
  - [dep-junit](#dep-junit)
  - [dep-log4j](#dep-log4j)
- - [dep-logback](#dep-logback) 
+ - [dep-logback](#dep-logback)
+ 
+### check-dep
+
+Switch on [maven-enforcer-plugin](http://maven.apache.org/enforcer/maven-enforcer-plugin/).
+The Enforcer plugin provides goals to control certain environmental constraints such as Maven version, 
+JDK version and OS family along with many more standard rules and user created rules. 
 
 ### dep-spock
 
