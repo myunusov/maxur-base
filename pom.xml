@@ -28,6 +28,10 @@
         <project.source.compile>${project.jdk}</project.source.compile>
         <project.target.compile>${project.jdk}</project.target.compile>
 
+        <kotlin.version>1.1.3</kotlin.version>
+        <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+        <kotlin.compiler.jvmTarget>${project.jdk}</kotlin.compiler.jvmTarget>
+
         <project.source.encoding>UTF-8</project.source.encoding>
         <project.build.sourceEncoding>${project.source.encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.source.encoding}</project.reporting.outputEncoding>
@@ -186,7 +190,6 @@
     <profiles>
         <profile>
             <id>self-doc</id>
-
             <distributionManagement>
                 <site>
                     <id>${github.global.server}</id>
@@ -194,12 +197,10 @@
                     <url>git:ssh://git@github.com/myunusov/maxur-base.git?gh-pages#</url>
                 </site>
             </distributionManagement>
-
             <reporting>
                 <plugins>
                     <plugin>
                         <artifactId>maven-surefire-report-plugin</artifactId>
-                        <version>${maven-surefire-report-plugin.version}</version>
                         <configuration>
                             <skipSurefireReport>true</skipSurefireReport>
                             <showSuccess>false</showSuccess>
@@ -374,6 +375,69 @@
         </profile>
 
         <profile>
+            <id>kotlin</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/src/kotlin</exists>
+                </file>
+            </activation>
+            <dependencies>
+                <!-- kotlin -->
+                <dependency>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                    <artifactId>kotlin-stdlib-jre8</artifactId>
+                    <version>${kotlin.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                    <artifactId>kotlin-reflect</artifactId>
+                    <version>${kotlin.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                    <artifactId>kotlin-test-junit</artifactId>
+                    <version>${kotlin.version}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>kotlin-maven-plugin</artifactId>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <configuration>
+                            <jvmTarget>${project.target.compile}</jvmTarget>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>compile</id>
+                                <goals>
+                                    <goal>compile</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceDirs>
+                                        <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+                                    </sourceDirs>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>test-compile</id>
+                                <goals>
+                                    <goal>test-compile</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceDirs>
+                                        <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
+                                    </sourceDirs>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
             <id>gh-pages</id>
             <build>
                 <plugins>
@@ -500,7 +564,6 @@
                     </plugin>
                 </plugins>
             </build>
-
             <reporting>
                 <plugins>
                     <plugin>
@@ -535,7 +598,6 @@
 
                     <plugin>
                         <artifactId>maven-surefire-report-plugin</artifactId>
-                        <version>${maven-surefire-report-plugin.version}</version>
                         <reportSets>
                             <reportSet>
                                 <reports>
@@ -679,7 +741,6 @@
 
                 </plugins>
             </reporting>
-
         </profile>
 
         <profile>
@@ -755,7 +816,6 @@
                         visit https://github.com/groovy/GMavenPlus/wiki -->
                         <groupId>org.codehaus.gmavenplus</groupId>
                         <artifactId>gmavenplus-plugin</artifactId>
-                        <version>${gmavenplus-plugin.version}</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -809,7 +869,6 @@
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>${jacoco-maven-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>pre-unit-test</id>
@@ -880,7 +939,6 @@
                     </plugin>
                 </plugins>
             </build>
-
             <reporting>
                 <excludeDefaults>true</excludeDefaults>
                 <plugins>
@@ -993,12 +1051,10 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>sonar-maven-plugin</artifactId>
-                        <version>${sonar-maven-plugin.version}</version>
                     </plugin>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>properties-maven-plugin</artifactId>
-                        <version>${properties-maven-plugin.version}</version>
                         <executions>
                             <execution>
                                 <phase>initialize</phase>
@@ -1236,9 +1292,27 @@
     </dependencyManagement>
 
     <build>
-
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <artifactId>kotlin-maven-plugin</artifactId>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                    <version>${kotlin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <!-- The gmavenplus plugin is used to compile Groovy code. To learn more about this plugin,
+                    visit https://github.com/groovy/GMavenPlus/wiki -->
+                    <groupId>org.codehaus.gmavenplus</groupId>
+                    <artifactId>gmavenplus-plugin</artifactId>
+                    <version>${gmavenplus-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-surefire-report-plugin</artifactId>
+                    <version>${maven-surefire-report-plugin.version}</version>
+                </plugin>
+
                 <plugin>
                     <artifactId>maven-help-plugin</artifactId>
                     <version>${maven-help-plugin.version}</version>
@@ -1514,6 +1588,23 @@
                     <version>${buildnumber-maven-plugin.version}</version>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco-maven-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>${sonar-maven-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>properties-maven-plugin</artifactId>
+                    <version>${properties-maven-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
