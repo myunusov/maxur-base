@@ -53,6 +53,7 @@ snapshot.allowed.artifacts | List of dependency patterns to exclude when checkin
  - [gh-pages](#gh-pages)
  - [gpg](#gpg)
  - [inspect](#inspect)
+ - [kotlin](#kotlin)
  - [jacoco](#jacoco)
  - [site](#site)
  - [sonar](#sonar)
@@ -121,6 +122,12 @@ For more information about Checkstyle, see http://checkstyle.sourceforge.net/
 
 All plugins are bound to the *verify* Maven phase. 
 All executions are named *maxur-check*.
+
+### kotlin
+
+This profile can be activated manually:
+
+It configures kotlin dependencies 
 
 ### jacoco
 
