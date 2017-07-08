@@ -42,7 +42,7 @@
 
         <site.path>${basedir}/src/site</site.path>
         <site.skip>true</site.skip>
-
+        <announcement.template>announcement.vm</announcement.template>
 
         <unit.tests.coverage.output.directory>
             ${project.reporting.outputDirectory}/jacoco-ut
@@ -104,6 +104,7 @@
         <maven-pmd-plugin.version>3.8</maven-pmd-plugin.version>
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
 
+        <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
         <versioneye-maven-plugin.version>3.11.4</versioneye-maven-plugin.version>
         <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
         <findbugs-maven-plugin.version>3.0.4</findbugs-maven-plugin.version>
@@ -117,6 +118,7 @@
         <appassembler-maven-plugin.version>2.0.0</appassembler-maven-plugin.version>
         <site-maven-plugin.version>0.12</site-maven-plugin.version>
         <duplicate-finder-maven-plugin.version>1.2.1</duplicate-finder-maven-plugin.version>
+        <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
         <pitest-maven.version>1.2.2</pitest-maven.version>
     </properties>
 
@@ -286,7 +288,7 @@
                                     <issueManagementSystems>
                                         <issueManagementSystem>GitHub</issueManagementSystem>
                                     </issueManagementSystems>
-                                    <template>announcement.vm</template>
+                                    <template>${announcement.template}</template>
                                     <templateDirectory>template</templateDirectory>
                                     <announcementFile>release-notes.md</announcementFile>
                                     <announcementDirectory>
@@ -529,9 +531,6 @@
                     <plugin>
                         <artifactId>maven-jxr-plugin</artifactId>
                         <version>${maven-jxr-plugin.version}</version>
-                        <configuration>
-                            <aggregate>true</aggregate>
-                        </configuration>
                     </plugin>
 
                     <plugin>
@@ -863,6 +862,7 @@
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
+                            <!--suppress MavenModelInspection -->
                             <argLine>${surefireArgLine}</argLine>
                         </configuration>
                     </plugin>
@@ -873,6 +873,7 @@
                             <encoding>${project.build.sourceEncoding}</encoding>
                             <perCoreThreadCount>true</perCoreThreadCount>
                             <threadCount>1</threadCount>
+                            <!--suppress MavenModelInspection -->
                             <argLine>${failsafeArgLine}</argLine>
                         </configuration>
 
@@ -1065,7 +1066,6 @@
                         <configuration>
                             <serverId>oss.sonatype.org</serverId>
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <description>${project.version}</description>
                         </configuration>
                         <executions>
                             <execution>
@@ -1239,11 +1239,16 @@
 
         <pluginManagement>
             <plugins>
-
                 <plugin>
                     <artifactId>maven-help-plugin</artifactId>
                     <version>${maven-help-plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${build-helper-maven-plugin.version}</version>
+                </plugin>
+
                 <plugin>
                     <artifactId>maven-dependency-plugin</artifactId>
                     <version>${maven-dependency-plugin.version}</version>
@@ -1470,7 +1475,7 @@
                     <version>${site-maven-plugin.version}</version>
                 </plugin>
 
-                 <plugin>
+                <plugin>
                     <groupId>org.basepom.maven</groupId>
                     <artifactId>duplicate-finder-maven-plugin</artifactId>
                     <version>${duplicate-finder-maven-plugin.version}</version>
@@ -1501,6 +1506,12 @@
                     <groupId>org.pitest</groupId>
                     <artifactId>pitest-maven</artifactId>
                     <version>${pitest-maven.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildnumber-maven-plugin</artifactId>
+                    <version>${buildnumber-maven-plugin.version}</version>
                 </plugin>
 
             </plugins>
