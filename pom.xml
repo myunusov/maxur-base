@@ -71,9 +71,11 @@
         <velocity.version>1.7</velocity.version>
         <wagon-git.version>2.0.4</wagon-git.version>
 
+        <!--don't update to 2.20 see https://github.com/junit-team/junit5/issues/809-->
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>2.19.1</maven-failsafe-plugin.version>
         <maven-surefire-report-plugin.version>2.19.1</maven-surefire-report-plugin.version>
+
         <maven-filtering.version>3.1.1</maven-filtering.version>
         <maven-changes-plugin.version>2.12.1</maven-changes-plugin.version>
         <maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
