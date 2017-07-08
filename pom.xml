@@ -28,6 +28,10 @@
         <project.source.compile>${project.jdk}</project.source.compile>
         <project.target.compile>${project.jdk}</project.target.compile>
 
+        <kotlin.version>1.1.3</kotlin.version>
+        <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+        <kotlin.compiler.jvmTarget>${project.jdk}</kotlin.compiler.jvmTarget>
+
         <project.source.encoding>UTF-8</project.source.encoding>
         <project.build.sourceEncoding>${project.source.encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.source.encoding}</project.reporting.outputEncoding>
@@ -42,7 +46,7 @@
 
         <site.path>${basedir}/src/site</site.path>
         <site.skip>true</site.skip>
-
+        <announcement.template>announcement.vm</announcement.template>
 
         <unit.tests.coverage.output.directory>
             ${project.reporting.outputDirectory}/jacoco-ut
@@ -71,9 +75,11 @@
         <velocity.version>1.7</velocity.version>
         <wagon-git.version>2.0.4</wagon-git.version>
 
+        <!--don't update to 2.20 see https://github.com/junit-team/junit5/issues/809-->
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>2.19.1</maven-failsafe-plugin.version>
         <maven-surefire-report-plugin.version>2.19.1</maven-surefire-report-plugin.version>
+
         <maven-filtering.version>3.1.1</maven-filtering.version>
         <maven-changes-plugin.version>2.12.1</maven-changes-plugin.version>
         <maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
@@ -102,6 +108,7 @@
         <maven-pmd-plugin.version>3.8</maven-pmd-plugin.version>
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
 
+        <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
         <versioneye-maven-plugin.version>3.11.4</versioneye-maven-plugin.version>
         <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
         <findbugs-maven-plugin.version>3.0.4</findbugs-maven-plugin.version>
@@ -115,6 +122,7 @@
         <appassembler-maven-plugin.version>2.0.0</appassembler-maven-plugin.version>
         <site-maven-plugin.version>0.12</site-maven-plugin.version>
         <duplicate-finder-maven-plugin.version>1.2.1</duplicate-finder-maven-plugin.version>
+        <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
         <pitest-maven.version>1.2.2</pitest-maven.version>
     </properties>
 
@@ -182,7 +190,6 @@
     <profiles>
         <profile>
             <id>self-doc</id>
-
             <distributionManagement>
                 <site>
                     <id>${github.global.server}</id>
@@ -190,12 +197,10 @@
                     <url>git:ssh://git@github.com/myunusov/maxur-base.git?gh-pages#</url>
                 </site>
             </distributionManagement>
-
             <reporting>
                 <plugins>
                     <plugin>
                         <artifactId>maven-surefire-report-plugin</artifactId>
-                        <version>${maven-surefire-report-plugin.version}</version>
                         <configuration>
                             <skipSurefireReport>true</skipSurefireReport>
                             <showSuccess>false</showSuccess>
@@ -284,7 +289,7 @@
                                     <issueManagementSystems>
                                         <issueManagementSystem>GitHub</issueManagementSystem>
                                     </issueManagementSystems>
-                                    <template>announcement.vm</template>
+                                    <template>${announcement.template}</template>
                                     <templateDirectory>template</templateDirectory>
                                     <announcementFile>release-notes.md</announcementFile>
                                     <announcementDirectory>
@@ -367,6 +372,69 @@
                     </plugin>
                 </plugins>
             </reporting>
+        </profile>
+
+        <profile>
+            <id>kotlin</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/src/kotlin</exists>
+                </file>
+            </activation>
+            <dependencies>
+                <!-- kotlin -->
+                <dependency>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                    <artifactId>kotlin-stdlib-jre8</artifactId>
+                    <version>${kotlin.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                    <artifactId>kotlin-reflect</artifactId>
+                    <version>${kotlin.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                    <artifactId>kotlin-test-junit</artifactId>
+                    <version>${kotlin.version}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>kotlin-maven-plugin</artifactId>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <configuration>
+                            <jvmTarget>${project.target.compile}</jvmTarget>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>compile</id>
+                                <goals>
+                                    <goal>compile</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceDirs>
+                                        <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+                                    </sourceDirs>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>test-compile</id>
+                                <goals>
+                                    <goal>test-compile</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceDirs>
+                                        <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
+                                    </sourceDirs>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
 
         <profile>
@@ -496,7 +564,6 @@
                     </plugin>
                 </plugins>
             </build>
-
             <reporting>
                 <plugins>
                     <plugin>
@@ -527,14 +594,10 @@
                     <plugin>
                         <artifactId>maven-jxr-plugin</artifactId>
                         <version>${maven-jxr-plugin.version}</version>
-                        <configuration>
-                            <aggregate>true</aggregate>
-                        </configuration>
                     </plugin>
 
                     <plugin>
                         <artifactId>maven-surefire-report-plugin</artifactId>
-                        <version>${maven-surefire-report-plugin.version}</version>
                         <reportSets>
                             <reportSet>
                                 <reports>
@@ -678,7 +741,6 @@
 
                 </plugins>
             </reporting>
-
         </profile>
 
         <profile>
@@ -754,7 +816,6 @@
                         visit https://github.com/groovy/GMavenPlus/wiki -->
                         <groupId>org.codehaus.gmavenplus</groupId>
                         <artifactId>gmavenplus-plugin</artifactId>
-                        <version>${gmavenplus-plugin.version}</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -808,7 +869,6 @@
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>${jacoco-maven-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>pre-unit-test</id>
@@ -861,6 +921,7 @@
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
+                            <!--suppress MavenModelInspection -->
                             <argLine>${surefireArgLine}</argLine>
                         </configuration>
                     </plugin>
@@ -871,13 +932,13 @@
                             <encoding>${project.build.sourceEncoding}</encoding>
                             <perCoreThreadCount>true</perCoreThreadCount>
                             <threadCount>1</threadCount>
+                            <!--suppress MavenModelInspection -->
                             <argLine>${failsafeArgLine}</argLine>
                         </configuration>
 
                     </plugin>
                 </plugins>
             </build>
-
             <reporting>
                 <excludeDefaults>true</excludeDefaults>
                 <plugins>
@@ -990,12 +1051,10 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>sonar-maven-plugin</artifactId>
-                        <version>${sonar-maven-plugin.version}</version>
                     </plugin>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>properties-maven-plugin</artifactId>
-                        <version>${properties-maven-plugin.version}</version>
                         <executions>
                             <execution>
                                 <phase>initialize</phase>
@@ -1063,7 +1122,6 @@
                         <configuration>
                             <serverId>oss.sonatype.org</serverId>
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <description>${project.version}</description>
                         </configuration>
                         <executions>
                             <execution>
@@ -1234,14 +1292,37 @@
     </dependencyManagement>
 
     <build>
-
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <artifactId>kotlin-maven-plugin</artifactId>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                    <version>${kotlin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <!-- The gmavenplus plugin is used to compile Groovy code. To learn more about this plugin,
+                    visit https://github.com/groovy/GMavenPlus/wiki -->
+                    <groupId>org.codehaus.gmavenplus</groupId>
+                    <artifactId>gmavenplus-plugin</artifactId>
+                    <version>${gmavenplus-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-surefire-report-plugin</artifactId>
+                    <version>${maven-surefire-report-plugin.version}</version>
+                </plugin>
 
                 <plugin>
                     <artifactId>maven-help-plugin</artifactId>
                     <version>${maven-help-plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${build-helper-maven-plugin.version}</version>
+                </plugin>
+
                 <plugin>
                     <artifactId>maven-dependency-plugin</artifactId>
                     <version>${maven-dependency-plugin.version}</version>
@@ -1468,7 +1549,7 @@
                     <version>${site-maven-plugin.version}</version>
                 </plugin>
 
-                 <plugin>
+                <plugin>
                     <groupId>org.basepom.maven</groupId>
                     <artifactId>duplicate-finder-maven-plugin</artifactId>
                     <version>${duplicate-finder-maven-plugin.version}</version>
@@ -1501,6 +1582,29 @@
                     <version>${pitest-maven.version}</version>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildnumber-maven-plugin</artifactId>
+                    <version>${buildnumber-maven-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco-maven-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>${sonar-maven-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>properties-maven-plugin</artifactId>
+                    <version>${properties-maven-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
